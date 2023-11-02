@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "ai-recipe-gen",
   "version": "1.0.0",
   "description": "backend for ai recipe generator",
