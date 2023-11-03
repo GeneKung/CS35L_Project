@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { getAuth, connectAuthEmulator, signInWithEmailAndPassword } from 'firebase/auth';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -19,8 +20,7 @@ const firebaseConfig = {
   measurementId: process.env.MEASUREMENT_ID,
 };
 
-console.log("upon start");
-console.log(process.env.API_KEY);
+console.log("SERVER STARTING UP");
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -33,3 +33,5 @@ const analytics = () => {
     }
 }
 
+// Firebase auth
+const auth = getAuth(app);
