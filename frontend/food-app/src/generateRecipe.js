@@ -1,7 +1,7 @@
 import OpenAI from 'openai';
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_KEY
+  apiKey: "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"
 });
 
 const generateRecipe = async (ingredients) => {
