@@ -1,0 +1,10 @@
+.Login-text {
+    text-align: center
+}
+
+
+.Login-prompt {
+    display: flex;
+    align-items: center;  
+    justify-content: center;
+}
