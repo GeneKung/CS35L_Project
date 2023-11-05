@@ -3,13 +3,13 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_APP_ID,
-  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
+  apiKey: "AIzaSyCaqDUwBqu3-C8BCMoot3nwJ9S68nqpAeo",
+  authDomain: "ai-recipe-generator-491f3.firebaseapp.com",
+  projectId: "ai-recipe-generator-491f3",
+  storageBucket: "ai-recipe-generator-491f3.appspot.com",
+  messagingSenderId: "316798272104",
+  appId: "1:316798272104:web:14fc4587e6b5cbb49771dd",
+  measurementId: "G-8TZPJQGXMF",
 };
 
 // Initialize Firebase

@@ -1,13 +1,23 @@
 import { useState } from "react";
 import "./SignIn.css";
+import { auth } from "../../firebase.js";
 
 export default function LoginPrompt() {
-  const [username, setUsername] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
-  function login() {
+  const login = async () => {
     console.log("Username: " + username);
     console.log("Password: " + password);
+    try {
+      await auth.signInWithEmailAndPassword(username, password);
+      // User is signed in.
+      console.log("User is signed in.");
+    } catch (error) {
+      setError(error.message);
+      console.error(error);
+    }
   }
 
   return (
@@ -40,6 +50,7 @@ export default function LoginPrompt() {
         <button type="submit" onClick={() => login()}>
           Login
         </button>
+
         <label>
           <input type="checkbox" name="remember" /> Remember me <br />
         </label>
@@ -47,6 +58,8 @@ export default function LoginPrompt() {
         <span className="psw">
           Forgot <a href="#">password?</a>
         </span>
+
+        {error && <div className="error">{error}</div>}
       </div>
     </div>
   );
