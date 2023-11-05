@@ -1,7 +1,7 @@
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth, connectAuthEmulator, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth } from "firebase/auth";
 
 dotenv.config();
 const firebaseConfig = {
@@ -19,3 +19,4 @@ const app = initializeApp(firebaseConfig);
 
 // Firebase auth
 const auth = getAuth(app);
+export { auth };
