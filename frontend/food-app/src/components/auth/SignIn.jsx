@@ -13,14 +13,14 @@ export default function LoginPrompt() {
     console.log("Username: " + username);
     console.log("Password: " + password);
     try {
-     await signInWithEmailAndPassword(auth, username, password);
+      await signInWithEmailAndPassword(auth, username, password);
       // User is signed in.
       console.log("User is signed in.");
     } catch (error) {
       handleFireBaseError(error);
       console.error(error);
     }
-  }
+  };
   const handleSignup = async () => {
     // First check that email and password are valid (meets length requirements, has special chars, etc.)
     try {
@@ -55,7 +55,7 @@ export default function LoginPrompt() {
         setError("An error occurred. Please try again later.");
         break;
     }
-  }
+  };
 
   return (
     <div className="Login-prompt">
@@ -91,7 +91,6 @@ export default function LoginPrompt() {
         <button type="submit" onClick={() => handleSignup()}>
           SignUp
         </button>
-
 
         <label>
           <input type="checkbox" name="remember" /> Remember me <br />
