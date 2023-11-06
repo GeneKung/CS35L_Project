@@ -1,7 +1,8 @@
 import OpenAI from 'openai';
+var gptKey = require("./keys/private.json");
 
 const openai = new OpenAI({
-  apiKey: "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",
+  apiKey: gptKey.key,
   dangerouslyAllowBrowser : true
 });
 
@@ -18,8 +19,11 @@ const generateRecipe = async (ingredients) => {
       temperature: 0.5,
     });
 
+    console.log(response);
+    console.log("Response Logged");
+
     // Extract the recipe from the response
-    const recipe = response.data.choices[0].message.content;
+    const recipe = response.choices[0].message.content;
 
     return recipe;
   } catch (error) {

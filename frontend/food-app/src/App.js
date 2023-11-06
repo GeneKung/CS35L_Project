@@ -11,7 +11,6 @@ function App() {
       <RecipeGenerator />
     </div>
 
-    // Just for testing sign-up button
   );
 }
 
