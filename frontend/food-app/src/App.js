@@ -4,12 +4,7 @@ import RecipeGenerator from "./components/RecipeGenerator.jsx"
 
 function App() {
   return (
-    <div className="App">
-      <SignIn />
-      <RecipeGenerator />
-    </div>
-
-    // Just for testing sign-up button
+     <RecipeGenerator />
   );
 }
 
