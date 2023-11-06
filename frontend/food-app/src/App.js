@@ -5,25 +5,30 @@ import "./App.css";
 import { AuthProvider } from "./components/auth/AuthContext";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
 import SignIn from "./components/auth/SignIn";
-
+import SignUp from "./components/auth/SignUp";
+import Home from "./components/display/Home";
 
 // NOTE: NEED TO CREATE SEPARATE LOGIN AND SIGNUP PAGES
-// They can use the same child components (like Header, emailInput, passwordInput, etc.) but want each route to be connected to a single component 
+// They can use the same child components (like Header, emailInput, passwordInput, etc.) but want each route to be connected to a single component
 
 // Routing
 const router = createBrowserRouter([
   {
     // ProtectedRoute will only display the child component if currentUser is not null (i.e. the user has signed in), else it will redirect to login
     path: "/",
-    element: <ProtectedRoute></ProtectedRoute>,
+    element: (
+      <ProtectedRoute>
+        <Home />
+      </ProtectedRoute>
+    ),
   },
   {
-    path: "login",
+    path: "signin",
     element: <SignIn />,
   },
   {
     path: "signup",
-    element: <SignIn />,
+    element: <SignUp />,
   },
 ]);
 

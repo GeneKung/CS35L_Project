@@ -12,14 +12,14 @@ export default function LoginPrompt() {
     console.log("Username: " + username);
     console.log("Password: " + password);
     try {
-     await signInWithEmailAndPassword(auth, username, password);
+      await signInWithEmailAndPassword(auth, username, password);
       // User is signed in.
       console.log("User is signed in.");
     } catch (error) {
       handleFireBaseError(error);
       console.error(error);
     }
-  }
+  };
 
   const handleFireBaseError = (error) => {
     // Map Firebase authentication errors to user-friendly messages
@@ -38,7 +38,7 @@ export default function LoginPrompt() {
         setError("An error occurred. Please try again later.");
         break;
     }
-  }
+  };
 
   return (
     <div className="Login-prompt">
