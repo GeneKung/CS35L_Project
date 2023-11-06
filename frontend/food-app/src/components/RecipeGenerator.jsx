@@ -22,6 +22,8 @@ export default function RecipeGenerator() {
       <h1>Recipe Generator</h1>
       <textarea
         value={ingredients}
+        id="ingredientsInput"
+        name="ingredients"
         onChange={(e) => setIngredients(e.target.value)}
         placeholder="Enter ingredients, separated by commas"
         rows={5}
