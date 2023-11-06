@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./SignIn.css";
 import { auth } from "../../firebase.js";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function LoginPrompt() {
   const [username, setUsername] = useState("");
@@ -16,8 +17,43 @@ export default function LoginPrompt() {
       // User is signed in.
       console.log("User is signed in.");
     } catch (error) {
-      setError(error.message);
+      handleFireBaseError(error);
       console.error(error);
+    }
+  }
+  const handleSignup = async () => {
+    // First check that email and password are valid (meets length requirements, has special chars, etc.)
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        username,
+        password
+      );
+      // Handle successful signup
+      console.log("Signed up user:", userCredential.user);
+    } catch (error) {
+      // Error handling
+      handleFireBaseError(error);
+      console.error("Error signing up:", error);
+    }
+  };
+
+  const handleFireBaseError = (error) => {
+    // Map Firebase authentication errors to user-friendly messages
+    switch (error.code) {
+      case "auth/invalid-email":
+        setError("Invalid email address. Please provide a valid email.");
+        break;
+      case "auth/user-not-found":
+        setError("User not found. Please sign up before logging in.");
+        break;
+      case "auth/wrong-password":
+        setError("Wrong password. Please check your password.");
+        break;
+      // Add more cases for other Firebase error codes as needed
+      default:
+        setError("An error occurred. Please try again later.");
+        break;
     }
   }
 
@@ -51,6 +87,11 @@ export default function LoginPrompt() {
         <button type="submit" onClick={() => login()}>
           Login
         </button>
+
+        <button type="submit" onClick={() => handleSignup()}>
+          SignUp
+        </button>
+
 
         <label>
           <input type="checkbox" name="remember" /> Remember me <br />
