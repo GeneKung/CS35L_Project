@@ -42,7 +42,7 @@ export default function LoginPrompt() {
         setError("An error occurred. Please try again later.");
         break;
     }
-  }
+  };
 
   return (
     <div className="Login-prompt">
