@@ -6,8 +6,14 @@ import { AuthProvider } from "./components/auth/AuthContext";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
 import SignIn from "./components/auth/SignIn";
 
+
+// NOTE: NEED TO CREATE SEPARATE LOGIN AND SIGNUP PAGES
+// They can use the same child components (like Header, emailInput, passwordInput, etc.) but want each route to be connected to a single component 
+
+// Routing
 const router = createBrowserRouter([
   {
+    // ProtectedRoute will only display the child component if currentUser is not null (i.e. the user has signed in), else it will redirect to login
     path: "/",
     element: <ProtectedRoute></ProtectedRoute>,
   },
@@ -21,7 +27,9 @@ const router = createBrowserRouter([
   },
 ]);
 
+// App Component
 function App() {
+  // AuthProvider wraps the entire application so that all components have access to currentUser state variable
   return (
     <AuthProvider>
       <RouterProvider router={router} />

@@ -1,66 +1,75 @@
 /* SignIn.css */
-.Login-text {
-    text-align: center;
-}
-
 .Login-prompt {
     display: flex;
-    align-items: center;
     justify-content: center;
-    height: 100vh; /* Adjust the height as needed */
-}
-
-/* Form styles */
-.Login-text label {
-    font-size: 18px;
-    font-weight: bold;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f5f5;
+  }
+  
+  .Login-text {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px; /* Adjust the width as needed */
+  }
+  
+  label {
     display: block;
-    margin-top: 10px;
-}
-
-.Login-text input {
+    margin: 10px 0;
+    font-weight: bold;
+    text-align: left;
+  }
+  
+  input[type="text"],
+  input[type="password"] {
     width: 100%;
     padding: 10px;
     margin: 5px 0;
     border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    outline: none;
-}
-
-.Login-text button {
+    border-radius: 3px;
+    box-sizing: border-box; /* Prevent the inputs from stretching */
+  }
+  
+  button {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
-    background-color: #007BFF; /* Adjust the background color as needed */
+    background-color: #0074d9;
     color: #fff;
     border: none;
-    border-radius: 5px;
-    font-size: 18px;
+    border-radius: 3px;
     cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.Login-text button:hover {
-    background-color: #0056b3; /* Adjust the hover color as needed */
-}
-
-.Login-text .psw a {
-    text-decoration: none;
-    color: #007BFF; /* Adjust the link color as needed */
-}
-
-.Login-text .psw a:hover    {
-    text-decoration: underline;
-}
-
-/* Error message style */
-.error {
-    color: #FF0000; /* Red color for error messages */
-    font-size: 16px;
-    margin-top: 10px;
-}
-
-
+  }
   
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  .error {
+    color: #ff0000;
+    margin-top: 10px;
+  }
+  
+  .psw {
+    margin-top: 10px;
+  }
+  
+  /* Style the forgot password link */
+  .psw a {
+    text-decoration: none;
+    color: #0074d9;
+  }
+  
+  .psw a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Style the remember me checkbox */
+  label input[type="checkbox"] {
+    vertical-align: middle;
+    margin-right: 5px;
+  }
   

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "./SignIn.css";
 import { auth } from "../../firebase.js";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function LoginPrompt() {
@@ -9,18 +8,22 @@ export default function LoginPrompt() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
-  const login = async () => {
-    console.log("Username: " + username);
-    console.log("Password: " + password);
+  const handleSignup = async () => {
+    // First check that email and password are valid (meets length requirements, has special chars, etc.)
     try {
-     await signInWithEmailAndPassword(auth, username, password);
-      // User is signed in.
-      console.log("User is signed in.");
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        username,
+        password
+      );
+      // Handle successful signup
+      console.log("Signed up user:", userCredential.user);
     } catch (error) {
+      // Error handling
       handleFireBaseError(error);
-      console.error(error);
+      console.error("Error signing up:", error);
     }
-  }
+  };
 
   const handleFireBaseError = (error) => {
     // Map Firebase authentication errors to user-friendly messages
@@ -68,17 +71,9 @@ export default function LoginPrompt() {
         />
         <br />
 
-        <button type="submit" onClick={() => login()}>
-          Login
+        <button type="submit" onClick={() => handleSignup()}>
+          SignUp
         </button>
-
-        <label>
-          <input type="checkbox" name="remember" /> Remember me <br />
-        </label>
-
-        <span className="psw">
-          Forgot <a href="#">password?</a>
-        </span>
 
         {error && <div className="error">{error}</div>}
       </div>
