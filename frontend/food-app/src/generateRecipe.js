@@ -1,7 +1,8 @@
 import OpenAI from 'openai';
 
 const openai = new OpenAI({
-  apiKey: "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"
+  apiKey: "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",
+  dangerouslyAllowBrowser : true
 });
 
 const generateRecipe = async (ingredients) => {
