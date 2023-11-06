@@ -2,7 +2,6 @@ import { useState } from "react";
 import "./SignIn.css";
 import { auth } from "../../firebase.js";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function LoginPrompt() {
   const [username, setUsername] = useState("");
