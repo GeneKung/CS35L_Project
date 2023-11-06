@@ -4,27 +4,40 @@ import generateRecipe from "../generateRecipe"
 export default function RecipeGenerator() {
   const [ingredients, setIngredients] = useState('');
   const [recipe, setRecipe] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleGenerateRecipe = async () => {
+  const handleGenerateClick = async () => {
+    setIsLoading(true);
     try {
       const generatedRecipe = await generateRecipe(ingredients);
       setRecipe(generatedRecipe);
     } catch (error) {
-      console.error('Failed to generate recipe:', error);
-      // Handle the error appropriately
+      console.error("Failed to generate recipe:", error);
     }
+    setIsLoading(false);
   };
 
   return (
     <div>
-      <input
-        type="text"
+      <h1>Recipe Generator</h1>
+      <textarea
         value={ingredients}
         onChange={(e) => setIngredients(e.target.value)}
-        placeholder="Enter ingredients"
+        placeholder="Enter ingredients, separated by commas"
+        rows={5}
+        style={{ width: '100%' }}
       />
-      <button onClick={handleGenerateRecipe}>Generate Recipe</button>
-      {recipe && <div><h3>Generated Recipe:</h3><p>{recipe}</p></div>}
+      <button onClick={handleGenerateClick} disabled={isLoading}>
+        {isLoading ? 'Generating...' : 'Generate Recipe'}
+      </button>
+      <div>
+        {recipe && (
+          <>
+            <h2>Generated Recipe</h2>
+            <p>{recipe}</p>
+          </>
+        )}
+      </div>
     </div>
   );
-}
+};
