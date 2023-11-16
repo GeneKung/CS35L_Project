@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./Header.css";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
@@ -9,12 +10,16 @@ export default function Header() {
       </div>
       <div className="Right">
         <div className="Tabs">
-          <div className="Menu-Item">
-            <button className="Menu-Button">My Fridge</button>
-          </div>
-          <div className="Menu-Item">
-            <button className="Menu-Button">Saved Recipies</button>
-          </div>
+          <Link to="/fridge" style={{ textDecoration: "none" }}>
+            <div className="Menu-Item">
+              <button className="Menu-Button">My Fridge</button>
+            </div>
+          </Link>
+          <Link to="/saved" style={{ textDecoration: "none" }}>
+            <div className="Menu-Item">
+              <button className="Menu-Button">Saved Recipies</button>
+            </div>
+          </Link>
         </div>
         <div className="Login">
           <button class="Login-Button">Log In</button>

@@ -2,3 +2,4 @@ backend/keys
 backend/node_modules
 backend/.env
 frontend/.env
+frontend/food-app/keys/private.json
