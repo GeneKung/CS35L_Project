@@ -2,11 +2,14 @@ import { useState } from "react";
 import "./SignIn.css";
 import { auth } from "../../firebase.js";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPrompt() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+
+  const navigate = useNavigate();
 
   const login = async () => {
     console.log("Username: " + username);
@@ -15,6 +18,7 @@ export default function LoginPrompt() {
       await signInWithEmailAndPassword(auth, username, password);
       // User is signed in.
       console.log("User is signed in.");
+      navigate("/", { replace: true });
     } catch (error) {
       handleFireBaseError(error);
       console.error(error);
