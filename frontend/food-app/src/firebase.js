@@ -1,17 +1,15 @@
-import dotenv from "dotenv";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
-dotenv.config();
 const firebaseConfig = {
-  apiKey: process.env.API_KEY,
-  authDomain: process.env.AUTH_DOMAIN,
-  projectId: process.env.PROJECT_ID,
-  storageBucket: process.env.STORAGE_BUCKET,
-  messagingSenderId: process.env.MESSAGING_SENDER_ID,
-  appId: process.env.APP_ID,
-  measurementId: process.env.MEASUREMENT_ID,
+  apiKey: "AIzaSyCaqDUwBqu3-C8BCMoot3nwJ9S68nqpAeo",
+  authDomain: "ai-recipe-generator-491f3.firebaseapp.com",
+  projectId: "ai-recipe-generator-491f3",
+  storageBucket: "ai-recipe-generator-491f3.appspot.com",
+  messagingSenderId: "316798272104",
+  appId: "1:316798272104:web:14fc4587e6b5cbb49771dd",
+  measurementId: "G-8TZPJQGXMF",
 };
 
 // Initialize Firebase
