@@ -3,7 +3,7 @@ import "./SignIn.css";
 import { auth } from "../../firebase.js";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function LoginPrompt() {
   const [username, setUsername] = useState("");
@@ -87,6 +87,10 @@ export default function LoginPrompt() {
         <button type="submit" onClick={() => handleSignup()}>
           Sign Up and Login
         </button>
+
+        <p>
+          Already have an account? <Link to="/signin">Sign In</Link>
+        </p>
 
         {error && <div className="error">{error}</div>}
       </div>
