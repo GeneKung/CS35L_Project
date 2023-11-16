@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./SignIn.css";
 import { auth } from "../../firebase.js";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function LoginPrompt() {
   const [username, setUsername] = useState("");
@@ -82,6 +82,10 @@ export default function LoginPrompt() {
         <span className="psw">
           Forgot <a href="#">password?</a>
         </span>
+
+        <p>
+          Don't have an account? <Link to="/signup">Sign Up</Link>
+        </p>
 
         {error && <div className="error">{error}</div>}
       </div>
