@@ -1,3 +1,4 @@
+/*
 import { useState } from "react";
 import generateRecipe from "../generateRecipe"
 
@@ -63,3 +64,4 @@ export default function RecipeGenerator() {
     </div>
   );
 };
+*/

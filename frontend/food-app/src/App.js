@@ -10,6 +10,7 @@ import Home from "./components/display/Home";
 import Header from "./components/display/Header";
 import SavedRecipies from "./components/display/SavedRecipies";
 import RecipeGenerator from "./components/RecipeGenerator";
+import Preference from "./components/display/Preference";
 
 // NOTE: NEED TO CREATE SEPARATE LOGIN AND SIGNUP PAGES
 // They can use the same child components (like Header, emailInput, passwordInput, etc.) but want each route to be connected to a single component
@@ -57,7 +58,7 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <Header />
-        <h1>My Fridge Page will Appear Here</h1>
+        <Preference />
       </ProtectedRoute>
     ),
   },
