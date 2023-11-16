@@ -1,12 +1,14 @@
 import './App.css';
-import SignIn from './components/auth/SignIn';
+import Header from './components/display/Header';
+import Preference from'./components/display/Preference';
 
 function App() {
   return (
     <div className="App">
-      <SignIn/>
+      <Header/>
+      <Preference/>
     </div>
-  );
+  )
 }
 
 export default App;

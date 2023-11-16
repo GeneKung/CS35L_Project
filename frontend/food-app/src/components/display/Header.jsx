@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import './Header.css';
+import '../templates/Header.css';
 
 export default function Header() {
     return (
