@@ -7,6 +7,7 @@ import ProtectedRoute from "./components/routing/ProtectedRoute";
 import SignIn from "./components/auth/SignIn";
 import SignUp from "./components/auth/SignUp";
 import Home from "./components/display/Home";
+import Header from "./components/display/Header";
 import SavedRecipies from "./components/display/SavedRecipies";
 // import RecipeGenerator from "./components/RecipeGenerator";
 
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       <ProtectedRoute>
+        <Header />
         <Home />
       </ProtectedRoute>
     ),
@@ -36,6 +38,7 @@ const router = createBrowserRouter([
     path: "saved",
     element: (
       <ProtectedRoute>
+        <Header />
         <SavedRecipies />
       </ProtectedRoute>
     ),
@@ -44,6 +47,7 @@ const router = createBrowserRouter([
     path: "generate",
     element: (
       <ProtectedRoute>
+        <Header />
         <h1>
           Recipe Generator (need ./keys/private.json to use actual component)
         </h1>
