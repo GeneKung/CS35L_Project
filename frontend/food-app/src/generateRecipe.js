@@ -6,15 +6,15 @@ const openai = new OpenAI({
   dangerouslyAllowBrowser : true
 });
 
-const generateRecipe = async (ingredients) => {
+const generateRecipe = async (ingredients, dietaryList, allergyList) => {
   try {
     const response = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [
         { role: "system", content: "You are a chef who creates recipes." },
-        { role: "user", content: `I have these ingredients: ${ingredients}. What can I make with them?` }
+        { role: "user", content: `I have these ingredients: ${ingredients}. What can I make with them?
+        I have these dietary restrictions: ${dietaryList} , and these allergies: ${allergyList}` }
       ],
-      max_tokens: 256,
       stop: ["Human:", "AI:"],
       temperature: 0.5,
     });

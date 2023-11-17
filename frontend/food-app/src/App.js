@@ -9,7 +9,8 @@ import SignUp from "./components/auth/SignUp";
 import Home from "./components/display/Home";
 import Header from "./components/display/Header";
 import SavedRecipies from "./components/display/SavedRecipies";
-// import RecipeGenerator from "./components/RecipeGenerator";
+import RecipeGenerator from "./components/RecipeGenerator";
+import Preference from "./components/display/Preference";
 
 // NOTE: NEED TO CREATE SEPARATE LOGIN AND SIGNUP PAGES
 // They can use the same child components (like Header, emailInput, passwordInput, etc.) but want each route to be connected to a single component
@@ -48,12 +49,18 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <Header />
-        <h1>
-          Recipe Generator (need ./keys/private.json to use actual component)
-        </h1>
+        <RecipeGenerator />
       </ProtectedRoute>
     ),
-    // element: (<ProtectedRoute> <RecipeGenerator /> </ProtectedRoute>),
+  },
+  {
+    path: "fridge",
+    element: (
+      <ProtectedRoute>
+        <Header />
+        <Preference />
+      </ProtectedRoute>
+    ),
   },
 ]);
 
