@@ -49,6 +49,10 @@ function Preference(){
     return (
         <>
         <Fridge diet={sendDiet()} allergy={allergy}/>
+        <h3>Saved Allergies:</h3>
+        {allergy.map(item =>( //loop through allergy list and output item
+          <div>{item}</div> 
+          ))}
         <div className="diet-container">
           <div className="diet-section">
           <h3>Diet</h3>
@@ -70,10 +74,6 @@ function Preference(){
               <input ref={inputRef} type="text" placeholder="Enter your allergies" />
               <button type="submit">Add</button>
           </form>
-          
-          {allergy.map(item =>( //loop through allergy list and output item
-          <div>{item}</div> 
-          ))}
           </div>
         </div>
         </>
