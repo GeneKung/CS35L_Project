@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function Home() {
   return (
     <>
-      <h1>Generate Recipies with AI</h1>
+      <h1>Generate Recipes with AI</h1>
       <div className="container">
         <div className="grid">
           {/* <Link to="/ingredients" style={{ textDecoration: "none" }}> */}
@@ -15,13 +15,13 @@ export default function Home() {
           {/* </Link> */}
           <Link to="/generate" style={{ textDecoration: "none" }}>
             <div className="card">
-              <h2>Generate Recipies</h2>
+              <h2>Generate Recipes</h2>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
             </div>
           </Link>
           <Link to="/saved" style={{ textDecoration: "none" }}>
             <div className="card">
-              <h2>Save Recipies</h2>
+              <h2>Save Recipes</h2>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
             </div>
           </Link>

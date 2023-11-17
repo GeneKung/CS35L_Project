@@ -38,7 +38,7 @@ export default function Header() {
           </Link>
           <Link to="/saved" style={{ textDecoration: "none" }}>
             <div className="Menu-Item">
-              <button className="Menu-Button">Saved Recipies</button>
+              <button className="Menu-Button">Saved Recipes</button>
             </div>
           </Link>
         </div>
