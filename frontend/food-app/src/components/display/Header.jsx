@@ -26,6 +26,11 @@ export default function Header() {
       </div>
       <div className="Right">
         <div className="Tabs">
+        <Link to="/" style={{ textDecoration: "none" }}>
+            <div className="Menu-Item">
+              <button className="Menu-Button">Home</button>
+            </div>
+          </Link>
           <Link to="/fridge" style={{ textDecoration: "none" }}>
             <div className="Menu-Item">
               <button className="Menu-Button">My Fridge</button>
