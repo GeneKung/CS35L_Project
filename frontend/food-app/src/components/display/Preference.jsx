@@ -70,9 +70,10 @@ function Preference(){
             </div> 
           </div>
           <div className="allergy-section">
+          <h3>Allergies</h3>
           <form onSubmit={changeAllergy}> 
               <input ref={inputRef} type="text" placeholder="Enter your allergies" />
-              <button type="submit">Add</button>
+              <button type="submit">Add Allergy</button>
           </form>
           </div>
         </div>
