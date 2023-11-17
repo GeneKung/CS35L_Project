@@ -28,6 +28,9 @@ export default function LoginPrompt() {
   const handleFireBaseError = (error) => {
     // Map Firebase authentication errors to user-friendly messages
     switch (error.code) {
+      case "auth/invalid-login-credentials":
+        setError("Invalid username or password")
+        break;
       case "auth/invalid-email":
         setError("Invalid email address. Please provide a valid email.");
         break;
