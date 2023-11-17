@@ -1,8 +1,24 @@
 import { useState } from "react";
 import "./Header.css";
 import { Link } from "react-router-dom";
+import { signOut } from 'firebase/auth'; 
+import { auth } from "../../firebase.js";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
+
+  const navigate = useNavigate();
+  const handleLogOut = async () => {
+    signOut(auth)
+      .then(() => {
+        console.log("User logged out");
+        navigate("/", { replace: true });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   return (
     <div className="Header">
       <div className="Logo">
@@ -22,7 +38,7 @@ export default function Header() {
           </Link>
         </div>
         <div className="Login">
-          <button class="Login-Button">Log In</button>
+          <button class="Login-Button" onClick={() => handleLogOut()}>Log Out</button>
         </div>
       </div>
     </div>
