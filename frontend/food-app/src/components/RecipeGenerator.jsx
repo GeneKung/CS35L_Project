@@ -1,6 +1,7 @@
 
 import { useState } from "react";
-import generateRecipe from "../generateRecipe"
+import generateRecipe from "../generateRecipe";
+import ReactMarkdown from 'react-markdown';
 
 export default function RecipeGenerator() {
   const [ingr, setIngr] = useState([]);
@@ -98,10 +99,12 @@ export default function RecipeGenerator() {
         {recipe && (
           <>
             <h2>Generated Recipe</h2>
-            <p>{recipe}</p>
+            <ReactMarkdown children={recipe} />
           </>
         )}
       </div>
     </>
+
+    
   )
 };

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./Header.css";
 import { Link } from "react-router-dom";
 import { signOut } from 'firebase/auth'; 

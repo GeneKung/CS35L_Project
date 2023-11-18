@@ -83,6 +83,7 @@ export default function LoginPrompt() {
         </label>
 
         <span className="psw">
+        {/*eslint-disable-next-line*/}
           Forgot <a href="#">password?</a>
         </span>
 

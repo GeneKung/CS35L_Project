@@ -8,7 +8,6 @@ import SignIn from "./components/auth/SignIn";
 import SignUp from "./components/auth/SignUp";
 import Home from "./components/display/Home";
 import Header from "./components/display/Header";
-import Fridge from "./components/display/Fridge";
 import SavedRecipies from "./components/display/SavedRecipies";
 import RecipeGenerator from "./components/RecipeGenerator";
 import Preference from "./components/display/Preference";
