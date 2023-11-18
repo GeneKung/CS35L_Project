@@ -9,9 +9,9 @@ const openai = new OpenAI({
 const generateRecipe = async (ingredients, dietaryList, allergyList) => {
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4",
       messages: [
-        { role: "system", content: "You are a chef who creates recipes." },
+        { role: "system", content: "You are a chef who creates recipes. Respond in Markdown format. Don't send any Headers larger than ##. For example, don't use a # header."},
         { role: "user", content: `I have these ingredients: ${ingredients}. What can I make with them?
         I have these dietary restrictions: ${dietaryList} , and these allergies: ${allergyList}` }
       ],
@@ -19,7 +19,7 @@ const generateRecipe = async (ingredients, dietaryList, allergyList) => {
       temperature: 0.5,
     });
 
-    console.log(response);
+    console.log(response.choices[0].message.content);
     console.log("Response Logged");
 
     // Extract the recipe from the response

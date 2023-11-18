@@ -1,5 +1,6 @@
 import { useState } from "react";
 import generateRecipe from "../../generateRecipe";
+import ReactMarkdown from 'react-markdown';
 
 function Fridge(props) {
   const [ingr, setIngr] = useState([]);
@@ -49,7 +50,7 @@ function Fridge(props) {
         {recipe && (
           <>
             <h2>Generated Recipe</h2>
-            <p>{recipe}</p>
+            <ReactMarkdown children={recipe} />
           </>
         )}
       </div>
