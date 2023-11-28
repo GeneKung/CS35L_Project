@@ -8,7 +8,7 @@ import SignIn from "./components/auth/SignIn";
 import SignUp from "./components/auth/SignUp";
 import Home from "./components/display/Home";
 import Header from "./components/display/Header";
-import SavedRecipies from "./components/display/SavedRecipies";
+import SavedRecipes from "./components/display/SavedRecipes";
 import RecipeGenerator from "./components/RecipeGenerator";
 import Preference from "./components/display/Preference";
 
@@ -40,7 +40,7 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <Header />
-        <SavedRecipies />
+        <SavedRecipes />
       </ProtectedRoute>
     ),
   },
