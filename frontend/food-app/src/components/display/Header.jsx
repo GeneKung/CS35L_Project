@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./Header.css";
 import { Link } from "react-router-dom";
 import { signOut } from 'firebase/auth'; 
@@ -22,7 +21,11 @@ export default function Header() {
   return (
     <div className="Header">
       <div className="Logo">
-        <h1>Food-App</h1>
+        <Link to="/" style={{ textDecoration: "none" }}>
+          <div className="Menu-Item">
+            <button className="Menu-Button"><h1>Food-App</h1></button>
+          </div>
+        </Link>
       </div>
       <div className="Right">
         <div className="Tabs">
