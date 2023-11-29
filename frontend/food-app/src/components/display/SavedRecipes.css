@@ -84,20 +84,22 @@ h1 {
     position: relative;
     padding: 32px;
     width: 75%;
-    height: 300px;
-    max-width: 1000px;
+    height: 60%;
+    max-width: 750px;
     background-color: #FFF;
+    border-radius: 25px;
 }
 
+.popup-card-inner .popup-content {
+    height: 90%;
+    overflow-y:auto;
+}
 .popup-card-inner .popup-close-btn {
-    top: 16px;
-    right: 16px;
+    
 }
 
 .popup-card-inner .popup-remove-btn {
-    top: 16px;
-    right: 16px;
-    background-color: #cf3143
+    background-color: #cf3143;  
 }
 .popup-card-inner .popup-remove-btn:hover {
     background-color: #a02533;

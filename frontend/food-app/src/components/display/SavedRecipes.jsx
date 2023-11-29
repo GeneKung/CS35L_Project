@@ -1,5 +1,6 @@
 import "./SavedRecipes.css";
 import { useState } from 'react';
+import { myRecipeList } from "./ExampleSavedRecipes.js"
 
 function ListItem({recipeInfo, setShowDisplayCard}) {
   return (
@@ -23,11 +24,15 @@ function PopupDisplayCard( {recipeInfo, showDisplayCard, setShowDisplayCard} ) {
   return (showDisplayCard) ? (
     <div className="popup-card">
       <div className="popup-card-inner">
-        <h1>{recipeInfo[i].Name}</h1>
-        <p>{recipeInfo[i].Description}</p>
-        <div className="row">
-          <div className="column"> <button className="popup-remove-btn">Remove from Saved Recipes</button></div>
-          <div className="column"> <button className="popup-close-btn" onClick={() => setShowDisplayCard(false)}>Close</button></div>
+        <div className="popup-content">
+          <h1>{recipeInfo[i].Name}</h1>
+          <p>{recipeInfo[i].Description}</p>
+        </div>
+        <div className="popup-buttons">
+          <div className="row">
+            <div className="column"> <button className="popup-remove-btn">Remove from Saved Recipes</button></div>
+            <div className="column"> <button className="popup-close-btn" onClick={() => setShowDisplayCard(false)}>Close</button></div>
+          </div>
         </div>
       </div>
     </div>
@@ -39,31 +44,10 @@ export default function SavedRecipies( {inputData} ) {
   const [showDisplayCard, setShowDisplayCard] = useState(0);
   
   // Example recipe cards
+  const recipeList = myRecipeList();
   // This state variable stores the information for
   // all the user's saved recipes.
-  const [recipeData, setRecipeData] = useState( 
-  [
-    {
-      id: 1,
-      Name: "Pumkin Pie",
-      Description: "Costco's pumpkin pie is a delectable and generously-sized dessert, boasting a velvety smooth pumpkin filling with the perfect blend of autumn spices, all nestled in a flaky, golden crust."
-    },
-    {
-      id: 2,
-      Name: "Banana",
-      Description: "Single banana."
-    },
-    {
-      id: 3,
-      Name: "Trader Joes Lasagna",
-      Description: "Trader Joe's lasagna is a delicious and convenient frozen Italian dish, featuring layers of pasta, ricotta, mozzarella, and flavorful marinara sauce, creating a satisfying and easy-to-prepare meal."
-    },
-    {
-      id: 4,
-      Name: "Egg Tart",
-      Description: "85 Degrees Bakery's egg tart is a delightful and flaky pastry filled with a rich and creamy egg custard, offering a perfect balance of sweetness and velvety texture in every bite."
-    }
-  ]);
+  const [recipeData, setRecipeData] = useState(recipeList);
 
   function removeRecipe(id) {
     // TODO
