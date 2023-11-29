@@ -1,39 +1,59 @@
-import { useRef, useState } from "react"
+import { useState } from "react";
+import generateRecipe from "../../generateRecipe";
+import ReactMarkdown from 'react-markdown';
 
 function Fridge(props) {
   const [ingr, setIngr] = useState([]);
-  const inputRef = useRef();
- 
+  const [inputValue1, setInputValue1] = useState("");
+  const [recipe, setRecipe] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
   function addIngredient(e){
-    e.preventDefault() //prevents deafault behavior of submitting (refresh page)
-    const value = inputRef.current.value
-    if (value === "") return
-    setIngr(prev => { //appends new array value after previous values in ingr list
-      return [...prev, value]
-    })
-    inputRef.current.value = "" //set back to empty string so search term disappears
-  }
-  
-  function generateRecipe(){
-    const data = {
-      ingredientList: ingr,
-      dietaryList: props.diet,
-      allergyList: props.allergy
-    };
-    console.log(data);
+    e.preventDefault();
+    if (inputValue1 === "") return;
+    setIngr((prev) => [...prev, inputValue1]);
+    setInputValue1(""); // Clear input value after adding
   }
 
+  const handleGenerateClick = async () => {
+    setIsLoading(true);
+    try {
+      const generatedRecipe = await generateRecipe(ingr, props.diet, props.allergy);
+      setRecipe(generatedRecipe);
+    } catch (error) {
+      console.error("Failed to generate recipe:", error);
+    }
+    setIsLoading(false);
+  };
+  
   return (
     <>
     <form onSubmit={addIngredient}>
-      New Ingredient: <input ref={inputRef} type="text" />
-      <button type="submit">Add</button>
-      <button onClick={() => generateRecipe()}>Generate</button>
+        <label>
+          New Ingredient:
+          <input
+            type="text"
+            value={inputValue1}
+            onChange={(e) => setInputValue1(e.target.value)}
+          />
+        </label>
+        <button type="submit">Add</button>
     </form>
-    <h3>Ingredients:</h3>
-    {ingr.map(item =>( //loop through ingr list with item representing each element
-      <div>{item}</div>
+    <button onClick={handleGenerateClick} disabled={isLoading}>
+        {isLoading ? 'Generating...' : 'Generate Recipe'}
+    </button>
+    <h3>Saved Ingredients:</h3>
+    {ingr.map(item1 =>( 
+      <div>{item1}</div>
     ))}
+    <div>
+        {recipe && (
+          <>
+            <h2>Generated Recipe</h2>
+            <ReactMarkdown children={recipe} />
+          </>
+        )}
+      </div>
     </>
   )
 }
