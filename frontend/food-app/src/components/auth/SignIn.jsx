@@ -82,11 +82,6 @@ export default function LoginPrompt() {
           <input type="checkbox" name="remember" /> Remember me <br />
         </label>
 
-        <span className="psw">
-        {/*eslint-disable-next-line*/}
-          Forgot <a href="#">password?</a>
-        </span>
-
         <p>
           Don't have an account? <Link to="/signup">Sign Up</Link>
         </p>
