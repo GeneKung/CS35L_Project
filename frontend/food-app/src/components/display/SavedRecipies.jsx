@@ -31,21 +31,21 @@ export default function SavedRecipes() {
         <h1>Saved Recipes</h1>
       </header>
       <div className="container">
-        {recipes.map((recipe, index) => (
+        {recipes?.map((recipe, index) => (
           <div className="recipe" key={index}>
             {/* Assuming recipeTitle is Markdown content */}
             <h2 dangerouslySetInnerHTML={{ __html: recipe.recipeTitle }} />
             {/* Render ingredients */}
             <h3>Ingredients:</h3>
             <ul>
-              {recipe.recipeIngredients.map((ingredient, i) => (
+              {recipe.recipeIngredients?.map((ingredient, i) => (
                 <li key={i}>{ingredient}</li>
               ))}
             </ul>
             {/* Render instructions */}
             <h3>Instructions:</h3>
             <ol>
-              {recipe.recipeInstructions.map((instruction, i) => (
+              {recipe.recipeInstructions?.map((instruction, i) => (
                 <li key={i}>{instruction}</li>
               ))}
             </ol>
