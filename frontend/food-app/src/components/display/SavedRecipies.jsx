@@ -1,9 +1,12 @@
 import "./SavedRecipies.css";
 import React, { useEffect, useState } from 'react';
-import { getAllRecipes } from "../../database/recipes";
+import { getAllRecipes, deleteRecipe, updateRecipe } from "../../database/recipes";
+import ReactMarkdown from 'react-markdown';
 
 export default function SavedRecipes() {
   const [recipes, setRecipes] = useState([]);
+  const [editingRecipe, setEditingRecipe] = useState(null);
+  const [editingRecipeContent, setEditingRecipeContent] = useState("");
 
   useEffect(() => {
     // Use the getAllRecipes function to fetch recipes when the component mounts
@@ -16,14 +19,43 @@ export default function SavedRecipes() {
       }
     };
 
-    fetchRecipes(); // Call the function
+    fetchRecipes(); 
 
-    // Optionally, you can set up a timer or other triggers to refresh the data
-    // Example: const intervalId = setInterval(fetchRecipes, 60000); // Refresh every minute
+  }, []); 
 
-    // Clean up the timer or other resources when the component unmounts
-    // return () => clearInterval(intervalId);
-  }, []); // Empty dependency array means it runs once when the component mounts
+  const handleDeleteRecipe = async (recipeID) => {
+    try {
+      await deleteRecipe(recipeID);
+      // Refetch recipes after deletion
+      const updatedRecipes = await getAllRecipes();
+      setRecipes(updatedRecipes);
+    } catch (error) {
+      console.error("Error deleting recipe: ", error);
+    }
+  }
+
+  const handleEditRecipe = (recipe) => {
+    setEditingRecipe(recipe);
+    setEditingRecipeContent(recipe.generatedRecipe);
+  }
+
+  const handleSaveEdit = async () => {
+    try {
+      if(editingRecipe) {
+        await updateRecipe(editingRecipe.id, editingRecipeContent);
+        const updatedRecipe = await getAllRecipes();
+        setRecipes(updatedRecipe);
+        setEditingRecipe(null);
+        setEditingRecipeContent("");
+      }
+    } catch (error) {
+      console.error("Error saving edited recipe: ", error);
+    }
+  }
+  const handleCancelEdit = () => {
+    setEditingRecipe(null);
+    setEditingRecipeContent("");
+  }
 
   return (
     <body>
@@ -31,26 +63,24 @@ export default function SavedRecipes() {
         <h1>Saved Recipes</h1>
       </header>
       <div className="container">
-        {recipes.map((recipe, index) => (
+        {recipes?.map((recipe, index) => (
           <div className="recipe" key={index}>
-            {/* Assuming recipeTitle is Markdown content */}
-            <h2 dangerouslySetInnerHTML={{ __html: recipe.recipeTitle }} />
-            {/* Render ingredients */}
-            <h3>Ingredients:</h3>
-            <ul>
-              {recipe.recipeIngredients.map((ingredient, i) => (
-                <li key={i}>{ingredient}</li>
-              ))}
-            </ul>
-            {/* Render instructions */}
-            <h3>Instructions:</h3>
-            <ol>
-              {recipe.recipeInstructions.map((instruction, i) => (
-                <li key={i}>{instruction}</li>
-              ))}
-            </ol>
-            {/* Assuming recipeNote is Markdown content */}
-            {recipe.recipeNote && <p dangerouslySetInnerHTML={{ __html: recipe.recipeNote }} />}
+            {editingRecipe === recipe ? (
+              <>
+                <textarea
+                 value={String(editingRecipeContent)}
+                onChange={(e) => setEditingRecipeContent(e.target.value)}
+                />
+                <button onClick={handleSaveEdit}>Save Changes</button>
+                <button onClick={handleCancelEdit}>Cancel</button>
+              </>
+            ) : (
+              <>
+                <ReactMarkdown children={recipe.generatedRecipe} />
+                <button id = "deleteBtn" onClick={() => handleDeleteRecipe(recipe.id)}>Delete Recipe</button>
+                <button onClick={() => handleEditRecipe(recipe)}>Edit Recipe</button>
+              </>
+            )}
           </div>
         ))}
       </div>
