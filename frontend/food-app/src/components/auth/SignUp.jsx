@@ -65,6 +65,7 @@ export default function LoginPrompt() {
         </label>
         <br />
         <input
+          className="login-textbox"
           type="text"
           placeholder="Enter Username"
           name="uname"
@@ -77,6 +78,7 @@ export default function LoginPrompt() {
         </label>
         <br />
         <input
+          className="login-textbox"
           type="password"
           placeholder="Enter Password"
           name="psw"
@@ -84,7 +86,7 @@ export default function LoginPrompt() {
         />
         <br />
 
-        <button type="submit" onClick={() => handleSignup()}>
+        <button className="button login-button" type="submit" onClick={() => handleSignup()}>
           Sign Up and Login
         </button>
 
