@@ -3,7 +3,9 @@ import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase.js";
 import setUpUser from "../../database/setUpUserFiles.js";
 import generateRecipe from "../../generateRecipe";
-import ReactMarkdown from "react-markdown";
+import './Fridge.css'
+import ReactMarkdown from 'react-markdown';
+
 
 function Fridge(props) {
   const [ingr, setIngr] = useState([]);
@@ -82,6 +84,10 @@ function Fridge(props) {
     updateFridgeInFirestore(newIngredients);
     setInputValue1(""); // Clear input value after adding
   }
+  function deleteIngredient(indexToDelete){
+    const updatedIngr = ingr.filter((ingredient, index) => index !== indexToDelete);
+    setIngr(updatedIngr);
+  }
 
   const handleGenerateClick = async () => {
     setIsLoading(true);
@@ -97,28 +103,32 @@ function Fridge(props) {
     }
     setIsLoading(false);
   };
-
+  
+  
   return (
     <>
-      <form onSubmit={addIngredient}>
-        <label>
-          New Ingredient:
+    <form onSubmit={addIngredient}>
+        <label >
+          <h3>New Ingredients</h3>
           <input
+            placeholder="Enter your ingredient"
+            className="input-text"
             type="text"
             value={inputValue1}
             onChange={(e) => setInputValue1(e.target.value)}
           />
+          <button className="add-button" type="submit">Add</button>
         </label>
-        <button type="submit">Add</button>
-      </form>
-      <button onClick={handleGenerateClick} disabled={isLoading}>
-        {isLoading ? "Generating..." : "Generate Recipe"}
-      </button>
-      <h3>Saved Ingredients:</h3>
-      {ingr.map((item1) => (
-        <div>{item1}</div>
-      ))}
-      <div>
+
+    </form>
+    <button className="generate-button" onClick={handleGenerateClick} disabled={isLoading}>
+        {isLoading ? 'Generating...' : 'Generate Recipe'}
+    </button>
+    <h3>Saved Ingredients:</h3>
+    {ingr.map((item1, index)=>( 
+      <button className="ingredients-button" onClick={() => deleteIngredient(index)}>{item1}</button>
+    ))}
+    <div>
         {recipe && (
           <>
             <h2>Generated Recipe</h2>

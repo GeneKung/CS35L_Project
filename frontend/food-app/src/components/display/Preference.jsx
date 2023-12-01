@@ -1,5 +1,5 @@
 import { useState, useRef} from "react"
-import '../../Preference.css'
+import './Preference.css'
 import Fridge from './Fridge'
 
 function Preference(){
@@ -45,40 +45,59 @@ function Preference(){
         })
         inputRef.current.value = "" //set back to empty string so search term disappears
     }
+    function deleteAllergy(indexToDelete){
+      const updatedAllergy= allergy.filter((allergy, index) => index !== indexToDelete);
+      setAllergy(updatedAllergy);
+    }
 
     return (
-        <>
-        <Fridge diet={sendDiet()} allergy={allergy}/>
-        <h3>Saved Allergies:</h3>
-        {allergy.map(item =>( //loop through allergy list and output item
-          <div>{item}</div> 
+      <div className="whole-container">
+        <div className="left-section">
+          <Fridge diet={sendDiet()} allergy={allergy}/>
+        </div>
+        <div className="middle-section">
+          <div className="allergy-container">
+          <h3>Saved Allergies:</h3>
+          {allergy.map((item, index) => (
+            <li
+            onClick={() => deleteAllergy(index)}
+            onMouseOver={(e) => {e.target.style.color = 'rgb(192, 45, 26)'; e.target.style.cursor = "pointer";}}
+            onMouseOut={(e) => {e.target.style.color = 'initial'; e.target.style.cusor = "initial";}}
+          >
+            {item}
+          </li>
           ))}
-        <div className="diet-container">
-          <div className="diet-section">
-          <h3>Diet</h3>
-            <div className="checkbox-group">
-            {diet.map((checkbox) => ( //loop through each element in diet
-              <label key={checkbox.name}> 
-                <input
-                  type="checkbox" 
-                  checked={checkbox.checked}
-                  onChange={() => changeDiet(checkbox.name)}
-                />
-                {checkbox.name} 
-              </label>
-            ))}
-            </div> 
-          </div>
-          <div className="allergy-section">
-          <h3>Allergies</h3>
-          <form onSubmit={changeAllergy}> 
-              <input ref={inputRef} type="text" placeholder="Enter your allergies" />
-              <button type="submit">Add Allergy</button>
-          </form>
           </div>
         </div>
-        </>
-      );
+        <div className="right-section">
+          <div className="diet-container">
+            <div className="diet-section">
+              <h3>Diet</h3>
+              <div className="checkbox-group">
+                {diet.map((checkbox) => (
+                  <label key={checkbox.name}> 
+                    <input
+                      type="checkbox" 
+                      checked={checkbox.checked}
+                      onChange={() => changeDiet(checkbox.name)}
+                    />
+                    {checkbox.name} 
+                  </label>
+                ))}
+              </div> 
+            </div>
+            <div className="allergy-section">
+              <h3>Allergies</h3>
+              <form onSubmit={changeAllergy}> 
+                <input ref={inputRef} type="text" placeholder="Enter your allergy" />
+                <button type="submit">Add</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+    
 }
 
 export default Preference

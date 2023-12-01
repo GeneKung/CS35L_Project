@@ -1,0 +1,21 @@
+.add-button{
+    width: 130px;
+    height: 40px;
+    margin-bottom: 0px
+}
+.generate-button{
+    width: 130px;
+    height: 40px
+}
+.input-text{
+    width: 450px !important;
+    height: 40px;
+    margin-right: 3px !important;
+}
+.ingredients-button {
+    border-radius: 20px;
+    margin: 3px
+}
+.ingredients-button:hover{
+    background-color:rgb(192, 45, 26);
+}

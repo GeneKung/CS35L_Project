@@ -3,6 +3,16 @@
     border: 1px solid #ccc;
     padding: 10px;
 }
+.allergy-container{
+    float: right;
+    border:1px solid #ccc;
+    padding:10px;
+    width: 200px
+}
+
+.allergy-button:hover{
+    background-color:rgb(192, 45, 26);
+}
 
 .diet-section{
     margin-bottom: 20px;
@@ -29,4 +39,26 @@
 h3{
     margin: 0px;
     padding: 5px;
+}
+/* split up screen into 3 sections using flex*/
+.whole-container {
+    display: flex;
+}
+  
+.left-section {
+    flex: 2.5;
+    padding: 10px; 
+}
+.right-section {
+    flex: 1;
+    padding: 10px; 
+}
+
+.middle-section {
+    flex: 1;
+    padding: 10px;
+}
+html, body {
+    height: 100%;
+    margin: 0;
 }
