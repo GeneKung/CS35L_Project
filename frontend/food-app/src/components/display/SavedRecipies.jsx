@@ -1,6 +1,7 @@
 import "./SavedRecipies.css";
 import React, { useEffect, useState } from 'react';
 import { getAllRecipes, deleteRecipe } from "../../database/recipes";
+import ReactMarkdown from 'react-markdown';
 
 export default function SavedRecipes() {
   const [recipes, setRecipes] = useState([]);
@@ -39,28 +40,9 @@ export default function SavedRecipes() {
       <div className="container">
         {recipes?.map((recipe, index) => (
           <div className="recipe" key={index}>
-            
-            {/* Assuming recipeTitle is Markdown content */}
-            <h2 dangerouslySetInnerHTML={{ __html: recipe.recipeTitle }} />
-            {/* Render ingredients */}
-            <h3>Ingredients:</h3>
-            <ul>
-              {recipe.recipeIngredients?.map((ingredient, i) => (
-                <li key={i}>{ingredient}</li>
-              ))}
-            </ul>
-            {/* Render instructions */}
-            <h3>Instructions:</h3>
-            <ol>
-              {recipe.recipeInstructions?.map((instruction, i) => (
-                <li key={i}>{instruction.replace(/^\d+\.\s*/, '')}</li>
-              ))}
-            </ol>
-            {/* Assuming recipeNote is Markdown content */}
-            {recipe.recipeNote && <p dangerouslySetInnerHTML={{ __html: recipe.recipeNote }} />}
+            <ReactMarkdown children={recipe.generatedRecipe} />
             <button onClick={() => handleDeleteRecipe(recipe.id)}>Delete Recipe</button>
           </div>
-          
         ))}
       </div>
     </body>

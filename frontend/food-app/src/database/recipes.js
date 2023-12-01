@@ -1,7 +1,7 @@
 import { addDoc, getDoc, collection, deleteDoc, setDoc, doc, updateDoc, getDocs } from "firebase/firestore";
 import { auth, db } from "../firebase.js";
 
-export async function saveRecipe(ingredients, allergies, dietary, recipeTitle, recipeIngredients, recipeInstructions, recipeNote) {
+export async function saveRecipe(generatedRecipe) {
     try {
         const currentUser = auth.currentUser;
 
@@ -19,13 +19,7 @@ export async function saveRecipe(ingredients, allergies, dietary, recipeTitle, r
                     const newRecipeRef = doc(recipesCollectionRef);
                     // Use setDoc to create a new document for the recipe
                     await setDoc(newRecipeRef, {
-                        ingredients,
-                        allergies,
-                        dietary,
-                        recipeTitle,
-                        recipeIngredients,
-                        recipeInstructions,
-                        recipeNote,
+                        generatedRecipe,
                     });
                     console.log("Recipe document successfully created");
                 } else {
@@ -66,6 +60,7 @@ export async function getAllRecipes() {
   
             // Extract data and IDs from each document
             const recipesData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            console.log("data: ", recipesData);
   
             return recipesData;
           } else {
@@ -80,7 +75,7 @@ export async function getAllRecipes() {
     } catch (e) {
       console.error("Error getting recipes: ", e);
     }
-  }
+}
 
 export async function deleteRecipe(recipeID) {
     try {
@@ -93,12 +88,9 @@ export async function deleteRecipe(recipeID) {
             if (userDoc.exists()) {
                 console.log("ID: ", recipeID);
 
-                //const recipeRef = doc(db, "recipes", recipeID);
-                //const recipeDoc = await getDoc(recipeRef);
-                //const recipeRef = doc(db, "users", uid, "recipes", recipeID);
-               //const recipeDoc = await getDoc(recipeRef);
                 const recipeRef = doc(db, "recipes", userDoc.data().rid, "recipes", recipeID);
                 const recipeDoc = await getDoc(recipeRef);
+                
                 if (recipeDoc.exists()) {
                     const result = await deleteDoc(recipeRef);
                     console.log("Delete result: ", result);
@@ -106,9 +98,6 @@ export async function deleteRecipe(recipeID) {
                 } else {
                     console.log("Recipe document not found.");
                 }
-                // const result = await deleteDoc(recipeRef);
-                // console.log("Delete result: ", result);
-                // console.log("Recipe document successfully deleted.")
             } else {
                 console.log("User document not found.");
             }
