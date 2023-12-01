@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import generateRecipe from "../generateRecipe";
 import ReactMarkdown from 'react-markdown';
@@ -8,7 +7,7 @@ export default function RecipeGenerator() {
   const [ingr, setIngr] = useState([]);
   const [allergies, setAllergies] = useState([]);
   const [dietary, setDietary] = useState([]);
-  const [recipe, setRecipe] = useState('');
+  const [recipe, setRecipe] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [inputValue1, setInputValue1] = useState("");
   const [inputValue2, setInputValue2] = useState("");
@@ -89,30 +88,30 @@ export default function RecipeGenerator() {
     }
   };
 
-  function addIngredient(e){
+  function addIngredient(e) {
     e.preventDefault();
     if (inputValue1 === "") return;
     setIngr((prev) => [...prev, inputValue1]);
     setInputValue1(""); // Clear input value after adding
   }
 
-  function addDietary(e){
+  function addDietary(e) {
     e.preventDefault();
     if (inputValue3 === "") return;
     setDietary((prev) => [...prev, inputValue3]);
     setInputValue3(""); // Clear input value after adding
   }
 
-  function addAllergy(e){
+  function addAllergy(e) {
     e.preventDefault();
     if (inputValue2 === "") return;
     setAllergies((prev) => [...prev, inputValue2]);
     setInputValue2(""); // Clear input value after adding
   }
-  
+
   return (
     <>
-    <form onSubmit={addIngredient}>
+      <form onSubmit={addIngredient}>
         <label>
           New Ingredient:
           <input
@@ -122,8 +121,8 @@ export default function RecipeGenerator() {
           />
         </label>
         <button type="submit">Add</button>
-    </form>
-    <form onSubmit={addAllergy}>
+      </form>
+      <form onSubmit={addAllergy}>
         <label>
           New Allergy:
           <input
@@ -133,8 +132,8 @@ export default function RecipeGenerator() {
           />
         </label>
         <button type="submit">Add</button>
-    </form>
-    <form onSubmit={addDietary}>
+      </form>
+      <form onSubmit={addDietary}>
         <label>
           New Dietary Restriction:
           <input
@@ -144,37 +143,39 @@ export default function RecipeGenerator() {
           />
         </label>
         <button type="submit">Add</button>
-    </form>
-    <button onClick={handleGenerateClick} disabled={isLoading}>
-        {isLoading ? 'Generating...' : 'Generate Recipe'}
-    </button>
+      </form>
 
-    <button onClick={handleSaveClick}>
-        Save Recipe (Test Function)
-    </button>
+      <button onClick={handleGenerateClick} disabled={isLoading}>
+         {isLoading ? 'Generating...' : 'Generate Recipe'}
+      </button>
 
-    <h3>Ingredients:</h3>
-    {ingr.map(item1 =>( 
-      <div>{item1}</div>
-    ))}
-    <h3>Allergies:</h3>
-    {allergies.map(item2 =>( 
-      <div>{item2}</div>
-    ))}
-    <h3>Dietary Restrictions:</h3>
-    {dietary.map(item3 =>( 
-      <div>{item3}</div>
-    ))}
-    <div>
-        {recipe && (
-          <>
-            <h2>Generated Recipe</h2>
-            <ReactMarkdown children={recipe} />
-          </>
-        )}
+      <button onClick={handleSaveClick}>
+          Save Recipe (Test Function)
+      </button>
+
+      <h3>Ingredients:</h3>
+      {ingr.map(item1 =>( 
+        <div>{item1}</div>
+      ))}
+
+      <h3>Allergies:</h3>
+      {allergies.map(item2 =>( 
+        <div>{item2}</div>
+      ))}
+
+      <h3>Dietary Restrictions:</h3>
+      {dietary.map(item3 =>( 
+        <div>{item3}</div>
+      ))}
+
+      <div>
+          {recipe && (
+            <>
+              <h2>Generated Recipe</h2>
+              <ReactMarkdown children={recipe} />
+            </>
+          )}
       </div>
     </>
-
-    
-  )
-};
+  );
+}
