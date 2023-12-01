@@ -68,8 +68,8 @@ export default function SavedRecipes() {
             {editingRecipe === recipe ? (
               <>
                 <textarea
-v                 value={String(editingRecipeContent)}
-                  onChange={(e) => setEditingRecipeContent(e.target.value)}
+                 value={String(editingRecipeContent)}
+                onChange={(e) => setEditingRecipeContent(e.target.value)}
                 />
                 <button onClick={handleSaveEdit}>Save Changes</button>
                 <button onClick={handleCancelEdit}>Cancel</button>
@@ -77,7 +77,7 @@ v                 value={String(editingRecipeContent)}
             ) : (
               <>
                 <ReactMarkdown children={recipe.generatedRecipe} />
-                <button onClick={() => handleDeleteRecipe(recipe.id)}>Delete Recipe</button>
+                <button id = "deleteBtn" onClick={() => handleDeleteRecipe(recipe.id)}>Delete Recipe</button>
                 <button onClick={() => handleEditRecipe(recipe)}>Edit Recipe</button>
               </>
             )}

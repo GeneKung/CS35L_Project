@@ -5,6 +5,7 @@ import setUpUser from "../../database/setUpUserFiles.js";
 import generateRecipe from "../../generateRecipe";
 import './Fridge.css'
 import ReactMarkdown from 'react-markdown';
+import { saveRecipe } from "../../database/recipes";
 
 
 function Fridge(props) {
@@ -103,7 +104,16 @@ function Fridge(props) {
     }
     setIsLoading(false);
   };
-  
+
+  const handleSaveClick = () => {
+    try {
+      saveRecipe(
+        recipe
+      );
+    } catch (e) {
+      console.error("Error saving recipie: ", e);
+    }
+  };
   
   return (
     <>
@@ -124,6 +134,7 @@ function Fridge(props) {
     <button className="generate-button" onClick={handleGenerateClick} disabled={isLoading}>
         {isLoading ? 'Generating...' : 'Generate Recipe'}
     </button>
+    <button onClick={handleSaveClick}>Save Recipe</button>
     <h3>Saved Ingredients:</h3>
     {ingr.map((item1, index)=>( 
       <button className="ingredients-button" onClick={() => deleteIngredient(index)}>{item1}</button>

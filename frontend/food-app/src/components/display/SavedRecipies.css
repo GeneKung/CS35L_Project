@@ -66,11 +66,15 @@ h1 {
 
 /* Add styles for buttons, adjust as needed */
 button {
-    background-color: #333;
+    background-color: #333333;
     color: #fff;
     border: none;
     border-radius: 3px;
     cursor: pointer;
+}
+
+#deleteBtn {
+    background-color: red;
 }
 
 button:hover {

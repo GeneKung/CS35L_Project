@@ -1,4 +1,4 @@
-import { addDoc, getDoc, collection, deleteDoc, setDoc, doc, updateDoc, getDocs } from "firebase/firestore";
+import { getDoc, collection, deleteDoc, setDoc, doc, updateDoc, getDocs } from "firebase/firestore";
 import { auth, db } from "../firebase.js";
 
 export async function saveRecipe(generatedRecipe) {
