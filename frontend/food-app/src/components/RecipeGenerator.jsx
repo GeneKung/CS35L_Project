@@ -1,6 +1,6 @@
 import { useState } from "react";
 import generateRecipe from "../generateRecipe";
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown from "react-markdown";
 import { saveRecipe } from "../database/recipes";
 
 export default function RecipeGenerator() {
@@ -13,11 +13,11 @@ export default function RecipeGenerator() {
   const [inputValue2, setInputValue2] = useState("");
   const [inputValue3, setInputValue3] = useState("");
 
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState("");
   const [ingredients, setIngredients] = useState([]);
   const [instructions, setInstructions] = useState([]);
-  const [note, setNote] = useState('');
-  
+  const [note, setNote] = useState("");
+
   const handleGenerateClick = async () => {
     setIsLoading(true);
     try {
@@ -25,54 +25,54 @@ export default function RecipeGenerator() {
       setRecipe(generatedRecipe);
 
       // Split the recipe content by newline characters
-      const sections = generatedRecipe.split('\n');
+      const sections = generatedRecipe.split("\n");
 
       // Extract title (first line)
       const title = sections[0].trim();
 
       // Extract ingredients (array from the contents after "**Ingredients:**")
-      const ingredientsIndex = sections.indexOf('**Ingredients:**');
-      const instructionsIndex = sections.indexOf('**Instructions:**');
-      const noteIndex = sections.indexOf('**Note:**');
+      const ingredientsIndex = sections.indexOf("**Ingredients:**");
+      const instructionsIndex = sections.indexOf("**Instructions:**");
+      const noteIndex = sections.indexOf("**Note:**");
 
       const ingredients = sections
         .slice(ingredientsIndex + 1, instructionsIndex)
-        .map(item => item.trim())
-        .filter(item => item !== '' && /^\d+\./.test(item));
+        .map((item) => item.trim())
+        .filter((item) => item !== "" && /^\d+\./.test(item));
 
       // Extract instructions (array from the contents after "**Instructions:**")
       const instructions = sections
         .slice(instructionsIndex + 1, noteIndex > -1 ? noteIndex : undefined)
-        .map(item => item.trim())
-        .filter(item => item !== '' && /^\d+\./.test(item));
+        .map((item) => item.trim())
+        .filter((item) => item !== "" && /^\d+\./.test(item));
 
       // Extract note (if present)
-      const note = noteIndex > -1 ? sections.slice(noteIndex).join('\n').trim() : null;
+      const note =
+        noteIndex > -1 ? sections.slice(noteIndex).join("\n").trim() : null;
 
       setTitle(title);
-      console.log("title: " , title);
+      console.log("title: ", title);
       setIngredients(ingredients);
       console.log("ingredients: ", ingredients);
       setInstructions(instructions);
       console.log("instructions: ", instructions);
       setNote(note);
       console.log("note: ", note);
-
     } catch (error) {
       console.error("Failed to generate recipe:", error);
     }
     setIsLoading(false);
   };
-  
+
   // TODO delete
   const handleSaveClick = () => {
     try {
       const userIngredient = [...ingr];
-      console.log("ingredients: " , userIngredient);
+      console.log("ingredients: ", userIngredient);
       const userAllergies = [...allergies];
-      console.log("allergies: " , userAllergies);
+      console.log("allergies: ", userAllergies);
       const userDietary = [...dietary];
-      console.log("dietary: " , userDietary);
+      console.log("dietary: ", userDietary);
       const recipeTitle = title;
       console.log("title: ", recipeTitle);
       const recipeIngredients = [...ingredients];
@@ -82,9 +82,17 @@ export default function RecipeGenerator() {
       const recipeNote = note;
       console.log("Note: ", recipeNote);
 
-      saveRecipe(userIngredient, userAllergies, userDietary, recipeTitle, recipeIngredients, recipeInstructions, recipeNote);
+      saveRecipe(
+        userIngredient,
+        userAllergies,
+        userDietary,
+        recipeTitle,
+        recipeIngredients,
+        recipeInstructions,
+        recipeNote
+      );
     } catch (e) {
-      console.error("Error saving recipie: " , e);
+      console.error("Error saving recipie: ", e);
     }
   };
 
@@ -146,35 +154,33 @@ export default function RecipeGenerator() {
       </form>
 
       <button onClick={handleGenerateClick} disabled={isLoading}>
-         {isLoading ? 'Generating...' : 'Generate Recipe'}
+        {isLoading ? "Generating..." : "Generate Recipe"}
       </button>
 
-      <button onClick={handleSaveClick}>
-          Save Recipe (Test Function)
-      </button>
+      <button onClick={handleSaveClick}>Save Recipe (Test Function)</button>
 
       <h3>Ingredients:</h3>
-      {ingr.map(item1 =>( 
+      {ingr.map((item1) => (
         <div>{item1}</div>
       ))}
 
       <h3>Allergies:</h3>
-      {allergies.map(item2 =>( 
+      {allergies.map((item2) => (
         <div>{item2}</div>
       ))}
 
       <h3>Dietary Restrictions:</h3>
-      {dietary.map(item3 =>( 
+      {dietary.map((item3) => (
         <div>{item3}</div>
       ))}
 
       <div>
-          {recipe && (
-            <>
-              <h2>Generated Recipe</h2>
-              <ReactMarkdown children={recipe} />
-            </>
-          )}
+        {recipe && (
+          <>
+            <h2>Generated Recipe</h2>
+            <ReactMarkdown children={recipe} />
+          </>
+        )}
       </div>
     </>
   );
