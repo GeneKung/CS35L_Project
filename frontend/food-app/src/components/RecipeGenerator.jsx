@@ -32,21 +32,17 @@ export default function RecipeGenerator() {
       const title = sections[0].trim();
 
       // Extract ingredients (array from the contents after "**Ingredients:**")
-      const ingredientsIndex = sections.indexOf('**Ingredients:**');
       const instructionsIndex = sections.indexOf('**Instructions:**');
       const noteIndex = sections.indexOf('**Note:**');
 
-      const ingredients = sections
-        .slice(ingredientsIndex + 1, instructionsIndex)
-        .map(item => item.trim())
-        .filter(item => item !== '' && /^\d+\./.test(item));
+      const ingredients = ingr.filter(item => !allergies.includes(item) && !dietary.includes(item));
 
       // Extract instructions (array from the contents after "**Instructions:**")
       const instructions = sections
         .slice(instructionsIndex + 1, noteIndex > -1 ? noteIndex : undefined)
         .map(item => item.trim())
         .filter(item => item !== '' && /^\d+\./.test(item));
-
+     
       // Extract note (if present)
       const note = noteIndex > -1 ? sections.slice(noteIndex).join('\n').trim() : null;
 

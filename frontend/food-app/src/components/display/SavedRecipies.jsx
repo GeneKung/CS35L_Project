@@ -1,6 +1,6 @@
 import "./SavedRecipies.css";
 import React, { useEffect, useState } from 'react';
-import { getAllRecipes } from "../../database/recipes";
+import { getAllRecipes, deleteRecipe } from "../../database/recipes";
 
 export default function SavedRecipes() {
   const [recipes, setRecipes] = useState([]);
@@ -16,14 +16,20 @@ export default function SavedRecipes() {
       }
     };
 
-    fetchRecipes(); // Call the function
+    fetchRecipes(); 
 
-    // Optionally, you can set up a timer or other triggers to refresh the data
-    // Example: const intervalId = setInterval(fetchRecipes, 60000); // Refresh every minute
+  }, []); 
 
-    // Clean up the timer or other resources when the component unmounts
-    // return () => clearInterval(intervalId);
-  }, []); // Empty dependency array means it runs once when the component mounts
+  const handleDeleteRecipe = async (recipeID) => {
+    try {
+      await deleteRecipe(recipeID);
+      // Refetch recipes after deletion
+      const updatedRecipes = await getAllRecipes();
+      setRecipes(updatedRecipes);
+    } catch (error) {
+      console.error("Error deleting recipe: ", error);
+    }
+  }
 
   return (
     <body>
@@ -33,6 +39,7 @@ export default function SavedRecipes() {
       <div className="container">
         {recipes?.map((recipe, index) => (
           <div className="recipe" key={index}>
+            
             {/* Assuming recipeTitle is Markdown content */}
             <h2 dangerouslySetInnerHTML={{ __html: recipe.recipeTitle }} />
             {/* Render ingredients */}
@@ -46,12 +53,14 @@ export default function SavedRecipes() {
             <h3>Instructions:</h3>
             <ol>
               {recipe.recipeInstructions?.map((instruction, i) => (
-                <li key={i}>{instruction}</li>
+                <li key={i}>{instruction.replace(/^\d+\.\s*/, '')}</li>
               ))}
             </ol>
             {/* Assuming recipeNote is Markdown content */}
             {recipe.recipeNote && <p dangerouslySetInnerHTML={{ __html: recipe.recipeNote }} />}
+            <button onClick={() => handleDeleteRecipe(recipe.id)}>Delete Recipe</button>
           </div>
+          
         ))}
       </div>
     </body>

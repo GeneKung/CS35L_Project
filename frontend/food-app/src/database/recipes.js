@@ -44,42 +44,83 @@ export async function saveRecipe(ingredients, allergies, dietary, recipeTitle, r
 
 export async function getAllRecipes() {
     try {
-        const currentUser = auth.currentUser;
+      const currentUser = auth.currentUser;
+  
+      if (currentUser) {
+        const uid = currentUser.uid;
+        const userRef = doc(db, "users", uid);
+        const userDoc = await getDoc(userRef);
+  
+        if (userDoc.exists()) {
+          const recipe_id = userDoc.data().rid;
+  
+          if (recipe_id) {
+            // Reference to the user's specific recipe document
+            const recipeRef = doc(db, "recipes", recipe_id);
+  
+            // Reference to the 'recipes' subcollection within the user's recipe document
+            const recipesCollectionRef = collection(recipeRef, "recipes");
+  
+            // Use getDocs to retrieve all documents within the 'recipes' subcollection
+            const querySnapshot = await getDocs(recipesCollectionRef);
+  
+            // Extract data and IDs from each document
+            const recipesData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  
+            return recipesData;
+          } else {
+            console.log("User does not have a recipe document.");
+          }
+        } else {
+          console.log('User document not found');
+        }
+      } else {
+        console.log('User not authenticated');
+      }
+    } catch (e) {
+      console.error("Error getting recipes: ", e);
+    }
+  }
 
+export async function deleteRecipe(recipeID) {
+    try {
+        const currentUser = auth.currentUser;
         if (currentUser) {
             const uid = currentUser.uid;
             const userRef = doc(db, "users", uid);
             const userDoc = await getDoc(userRef);
 
             if (userDoc.exists()) {
-                const recipe_id = userDoc.data().rid;
-                if (recipe_id) {
-                    // Reference to the user's specific recipe document
-                    const recipeRef = doc(db, "recipes", recipe_id);
+                console.log("ID: ", recipeID);
 
-                    // Reference to the 'recipes' subcollection within the user's recipe document
-                    const recipesCollectionRef = collection(recipeRef, "recipes");
-
-                    // Use getDocs to retrieve all documents within the 'recipes' subcollection
-                    const querySnapshot = await getDocs(recipesCollectionRef);
-
-                    // Extract data from each document
-                    const recipes = querySnapshot.docs.map(doc => doc.data());
-
-                    return recipes;
+                //const recipeRef = doc(db, "recipes", recipeID);
+                //const recipeDoc = await getDoc(recipeRef);
+                //const recipeRef = doc(db, "users", uid, "recipes", recipeID);
+               //const recipeDoc = await getDoc(recipeRef);
+                const recipeRef = doc(db, "recipes", userDoc.data().rid, "recipes", recipeID);
+                const recipeDoc = await getDoc(recipeRef);
+                if (recipeDoc.exists()) {
+                    const result = await deleteDoc(recipeRef);
+                    console.log("Delete result: ", result);
+                    console.log("Recipe document successfully deleted.");
                 } else {
-                    console.log("User does not have a recipe document.");
+                    console.log("Recipe document not found.");
                 }
+                // const result = await deleteDoc(recipeRef);
+                // console.log("Delete result: ", result);
+                // console.log("Recipe document successfully deleted.")
             } else {
-                console.log('User document not found');
+                console.log("User document not found.");
             }
         } else {
-            console.log('User not authenticated');
+            console.log("User not authenticated");
         }
     } catch (e) {
-        console.error("Error getting recipes: ", e);
+        console.error("Error deleting recipe: ", e);
     }
 }
+
+
 
 /*
 export async function saveRecipe(ingredients, allergies, dietary, recipeTitle, recipeIngredients, recipeInstructions, recipeNote) {
