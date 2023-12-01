@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
-import { doc, updateDoc, getDoc } from "firebase/firestore";
-import { auth, db } from "../../firebase.js";
-import setUpUser from "../../database/setUpUserFiles.js";
+import { auth } from "../../firebase.js";
 import generateRecipe from "../../generateRecipe";
-import './Fridge.css'
-import ReactMarkdown from 'react-markdown';
+import "./Fridge.css";
+import ReactMarkdown from "react-markdown";
 import { saveRecipe } from "../../database/recipes";
-
+import {
+  getFridgeIngredients,
+  updateFridgeInFirestore,
+} from "../../database/fridgeFirestore.js";
 
 function Fridge(props) {
   const [ingr, setIngr] = useState([]);
@@ -15,79 +16,48 @@ function Fridge(props) {
   const [isLoading, setIsLoading] = useState(false);
   const currentUser = auth.currentUser;
 
+  // Gets ingredients data on render if currentUser has changed since last render
   useEffect(() => {
-    const getFridgeData = async () => {
-      if (currentUser) {
-        const uid = currentUser.uid;
-        let userDocRef = doc(db, "users", uid);
-        let userDocSnap = await getDoc(userDocRef);
-
-        if (!userDocSnap.exists()) {
-          console.log("Setting up user");
-          setUpUser();
-          userDocRef = doc(db, "users", uid);
-          userDocSnap = await getDoc(userDocRef);
-
-          if (!userDocSnap.exists()) {
-            console.log("ERROR - USER DOC SHOULD EXIST BY NOW");
-          }
-        }
-
-        const userData = userDocSnap.data();
-        console.log(userData);
-        const fridgeId = userData.fid;
-
-        const fridgeDocRef = doc(db, "fridges", fridgeId);
-        const fridgeDocSnap = await getDoc(fridgeDocRef);
-
-        if (fridgeDocSnap.exists()) {
-          const fridgeData = fridgeDocSnap.data();
-          setIngr(fridgeData.ingredients || []); // Assuming ingredients are stored in 'ingredients'
-        }
-      }
-    };
-
-    getFridgeData();
-  }, [currentUser]);
-
-  async function updateFridgeInFirestore(newIngredientList) {
     if (currentUser) {
-      const uid = currentUser.uid;
-      const userDocRef = doc(db, "users", uid);
-      const userDocSnap = await getDoc(userDocRef);
-
-      if (userDocSnap.exists()) {
-        const userData = userDocSnap.data();
-        const fridgeId = userData.fid;
-
-        const fridgeDocRef = doc(db, "fridges", fridgeId);
-        await updateDoc(fridgeDocRef, { ingredients: newIngredientList });
-        console.log("updated doc fridge");
-        console.log(newIngredientList);
-
-        // const fridgeDocSnap = await getDoc(fridgeDocRef);
-
-        // if (fridgeDocSnap.exists()) {
-        //   const fridgeData = fridgeDocSnap.data();
-        //   setIngr(fridgeData.ingredients || []); // Assuming ingredients are stored in 'ingredients'
-        //   console.log("updated client fridge");
-        //   console.log(fridgeData.ingredients);
-        // }
-      }
+      getFridgeIngredients(currentUser).then((ingredients) => {
+        setIngr(ingredients);
+      });
+    } else {
+      console.error("Fridge component rendered wihout a currentUser");
     }
-  }
+  }, [currentUser]);
 
   function addIngredient(e) {
     e.preventDefault();
     if (inputValue1 === "") return;
-    const newIngredients = [...ingr, inputValue1];
-    setIngr(newIngredients);
-    updateFridgeInFirestore(newIngredients);
+
+    const updatedIngr = [...ingr, inputValue1];
+    setIngr(updatedIngr);
+
+    // Update the fridge doc
+    if (currentUser) {
+      const fridgeUpdateObj = { ingredients: updatedIngr };
+      updateFridgeInFirestore(currentUser, fridgeUpdateObj);
+    } else {
+      console.error("Can't update fridge doc wihout a currentUser");
+    }
+
     setInputValue1(""); // Clear input value after adding
   }
-  function deleteIngredient(indexToDelete){
-    const updatedIngr = ingr.filter((ingredient, index) => index !== indexToDelete);
+
+  function deleteIngredient(indexToDelete) {
+    const updatedIngr = ingr.filter(
+      (ingredient, index) => index !== indexToDelete
+    );
     setIngr(updatedIngr);
+
+    // Update the fridge doc
+    if (currentUser) {
+      const fridgeUpdateObj = { ingredients: updatedIngr };
+      updateFridgeInFirestore(currentUser, fridgeUpdateObj);
+    } else {
+      console.error("Can't update fridge doc wihout a currentUser");
+    }
   }
 
   const handleGenerateClick = async () => {
@@ -107,18 +77,16 @@ function Fridge(props) {
 
   const handleSaveClick = () => {
     try {
-      saveRecipe(
-        recipe
-      );
+      saveRecipe(recipe);
     } catch (e) {
       console.error("Error saving recipie: ", e);
     }
   };
-  
+
   return (
     <>
-    <form onSubmit={addIngredient}>
-        <label >
+      <form onSubmit={addIngredient}>
+        <label>
           <h3>New Ingredients</h3>
           <input
             placeholder="Enter your ingredient"
@@ -127,19 +95,29 @@ function Fridge(props) {
             value={inputValue1}
             onChange={(e) => setInputValue1(e.target.value)}
           />
-          <button className="add-button" type="submit">Add</button>
+          <button className="add-button" type="submit">
+            Add
+          </button>
         </label>
-
-    </form>
-    <button className="generate-button" onClick={handleGenerateClick} disabled={isLoading}>
-        {isLoading ? 'Generating...' : 'Generate Recipe'}
-    </button>
-    <button onClick={handleSaveClick}>Save Recipe</button>
-    <h3>Saved Ingredients:</h3>
-    {ingr.map((item1, index)=>( 
-      <button className="ingredients-button" onClick={() => deleteIngredient(index)}>{item1}</button>
-    ))}
-    <div>
+      </form>
+      <button
+        className="generate-button"
+        onClick={handleGenerateClick}
+        disabled={isLoading}
+      >
+        {isLoading ? "Generating..." : "Generate Recipe"}
+      </button>
+      <button onClick={handleSaveClick}>Save Recipe</button>
+      <h3>Saved Ingredients:</h3>
+      {ingr.map((item1, index) => (
+        <button
+          className="ingredients-button"
+          onClick={() => deleteIngredient(index)}
+        >
+          {item1}
+        </button>
+      ))}
+      <div>
         {recipe && (
           <>
             <h2>Generated Recipe</h2>
