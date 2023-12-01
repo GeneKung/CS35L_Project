@@ -1,17 +1,60 @@
 
 
-/* Create a container with a max-width, centered content, and some spacing */
-.container {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: grey;
+.opening{
+    display:flex;
+    height: 35rem;
+    background-color: #7ea1b4;
 }
 
-/* Style buttons with a background color, text color, and hover effect */
+.opening .open-text {
+    width: 20%;
+    margin-left:15%;
+    margin-top:7%;
+}
+
+.opening .open-button {
+    border-radius: 20px;
+    border: 2px solid black;
+    opacity: 1.0;
+    background-color: rgba(0, 0, 0, 0);
+    width:50%;
+    color: black;
+}
+
+.open-button:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.opening .open-image-container {
+    width:50%;
+    height: 100%;
+    margin-left: auto;
+}
+
+
+.opening .open-image-container .open-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.home-menu {
+    display:flex;
+    height: 15.5rem;
+    background-color: #c1c1c1;
+}
+
+.home-menu-container {
+    width: 100%;
+    height: 72%;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: rgb(126, 161, 180);
+}
+
 .button {
     background-color: #007BFF;
     color: #fff;
@@ -26,31 +69,23 @@
     background-color: #0056b3;
 }
 
-/* Create a responsive grid layout */
-.grid {
+.home-menu-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
 }
 
 /* Style cards in the grid layout */
-.card {
-    background-color: #fff;
-    border: 1px solid #e0e0e0;
+.home-menu-card {
     border-radius: 5px;
     padding: 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    background-color:rgb(255, 188, 188);
+    background-color:rgba(255, 255, 255, 0.5);
     color: black;
+    height: 80%;
 }
 
-/* Apply responsive design for smaller screens */
-@media (max-width: 768px) {
-    .container {
-        padding: 10px;
-    }
-
-    .grid {
-        grid-template-columns: 1fr;
-    }
+.home-menu-card:hover {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
 }
+

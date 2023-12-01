@@ -11,7 +11,9 @@ const generateRecipe = async (ingredients, dietaryList, allergyList) => {
     const response = await openai.chat.completions.create({
       model: "gpt-4",
       messages: [
-        { role: "system", content: "You are a chef who creates recipes. Respond in Markdown format. Don't send any Headers larger than ##. For example, don't use a # header."},
+        { role: "system", content: "You are a chef who creates recipes. Respond in Markdown format. \
+        Don't send any Headers larger than ##. For example, don't use a # header. \
+        The first line of your repsonse must be a title for the recipe, and the 2nd line onwards should be the recipe"},
         { role: "user", content: `I have these ingredients: ${ingredients}. What can I make with them?
         I have these dietary restrictions: ${dietaryList} , and these allergies: ${allergyList}` }
       ],
