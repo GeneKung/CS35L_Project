@@ -27,9 +27,9 @@ export default function RecipeGenerator() {
   // TODO delete
   const handleSaveClick = () => {
     try {
-      saveRecipe(
-        recipe
-      );
+      if (recipe !== "") {
+        saveRecipe(recipe);
+      }
     } catch (e) {
       console.error("Error saving recipie: ", e);
     }
