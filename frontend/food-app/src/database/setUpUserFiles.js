@@ -8,10 +8,24 @@ export default async function setUpUser() {
     const uid = user.uid;
     console.log(uid);
     await setDoc(doc(db, "users", uid), {});
+
     const fridgeRef = await addDoc(collection(db, "fridges"), {
       ingredients: [],
+      allergies: [],
+      diet: {
+        lactoseIntolerant: false,
+        glutenIntolerant: false,
+        vegetarian: false,
+        vegan: false,
+        kosher: false,
+        keto: false,
+        diabetes: false,
+        dairyFree: false,
+        lowCarb: false,
+      },
     });
     const fridge_id = fridgeRef.id;
+
     const recipeRef = await addDoc(collection(db, "recipes"), {
       recipes: [],
     });

@@ -18,7 +18,7 @@ async function getFridgeData(currentUser) {
 
       // If there is no matching doc in "users" collection, initalize the user's docs
       if (!userDocSnap.exists()) {
-        setUpUser();
+        await setUpUser();
         userDocRef = doc(db, "users", uid);
         userDocSnap = await getDoc(userDocRef);
 
@@ -83,6 +83,31 @@ export async function updateFridgeInFirestore(currentUser, newFridgeData) {
 
 // Gets fridge ingredients data
 export async function getFridgeIngredients(currentUser) {
-  const fridgeData = getFridgeData(currentUser);
-  return fridgeData.ingredients;
+  const fridgeData = await getFridgeData(currentUser);
+  const ingredients = fridgeData.ingredients;
+
+  return ingredients;
+}
+
+// Gets fridge preferences data
+export async function getFridgePreferences(currentUser) {
+  const fridgeData = await getFridgeData(currentUser);
+
+  const dietObj = fridgeData.diet;
+  const diet = [
+    { name: "Lactose Intolerant", checked: dietObj.lactoseIntolerant },
+    { name: "Gluten Intolerant", checked: dietObj.glutenIntolerant },
+    { name: "Vegetarian", checked: dietObj.vegetarian },
+    { name: "Vegan", checked: dietObj.vegan },
+    { name: "Kosher", checked: dietObj.kosher },
+    { name: "Keto", checked: dietObj.keto },
+    { name: "Diabetes", checked: dietObj.diabetes },
+    { name: "Dairy Free", checked: dietObj.dairyFree },
+    { name: "Low Carb", checked: dietObj.lowCarb },
+  ];
+
+  const allergies = fridgeData.allergies;
+
+  const preferencesObj = { diet: diet, allergies: allergies };
+  return preferencesObj;
 }

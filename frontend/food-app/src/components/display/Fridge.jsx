@@ -31,6 +31,7 @@ function Fridge(props) {
     e.preventDefault();
     if (inputValue1 === "") return;
 
+    // direct state update might cause problems
     const updatedIngr = [...ingr, inputValue1];
     setIngr(updatedIngr);
 
@@ -46,6 +47,7 @@ function Fridge(props) {
   }
 
   function deleteIngredient(indexToDelete) {
+    // direct state update might cause problems
     const updatedIngr = ingr.filter(
       (ingredient, index) => index !== indexToDelete
     );
