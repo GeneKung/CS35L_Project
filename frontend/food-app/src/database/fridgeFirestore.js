@@ -1,6 +1,5 @@
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase.js";
-import setUpUser from "./setUpUserFiles.js";
 
 // This document fridgeFirestore includes helper functiosn for Fridge and Preference components to interact with Firebase.
 // "fridge" refers to the entire fridge composed of "Fridge" and "Preference" components
@@ -16,17 +15,8 @@ async function getFridgeData(currentUser) {
       let userDocRef = doc(db, "users", uid);
       let userDocSnap = await getDoc(userDocRef);
 
-      // If there is no matching doc in "users" collection, initalize the user's docs
       if (!userDocSnap.exists()) {
-        await setUpUser();
-        userDocRef = doc(db, "users", uid);
-        userDocSnap = await getDoc(userDocRef);
-
-        if (!userDocSnap.exists()) {
-          console.error(
-            "Couldn't find user's \"users\" doc, even after attempting setup"
-          );
-        }
+        console.error("Couldn't find user's \"users\" doc");
       }
 
       // Get the user's "fridges" doc data and return it as an object
