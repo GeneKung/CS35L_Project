@@ -131,3 +131,12 @@ button:hover {
 .popup-card-inner .popup-remove-btn:hover {
     background-color: #a02533;
 }
+
+.saved-search-bar {
+    display: flex;
+    text-align: center;
+    margin: 10px auto;
+    align-items: center;
+    justify-content: center;
+    gap:10px;
+}

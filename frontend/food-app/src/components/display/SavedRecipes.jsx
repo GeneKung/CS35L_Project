@@ -14,7 +14,6 @@ function generateTitleEmojis(recipeTitle){
       recipeTitle += emoji.get(words[i].toLowerCase().slice(0,-1));
     }
   }
-  console.log(recipeTitle);
   return recipeTitle;
 }
 
@@ -23,6 +22,7 @@ export default function SavedRecipies( {inputData} ) {
   const [editingRecipe, setEditingRecipe] = useState(null);
   const [editingRecipeContent, setEditingRecipeContent] = useState("");
   const [showDisplayCard, setShowDisplayCard] = useState(-1);
+  const [searchResults, setSearchResults] = useState([-1]);
 
   useEffect(() => {
     // Use the getAllRecipes function to fetch recipes when the component mounts
@@ -34,9 +34,7 @@ export default function SavedRecipies( {inputData} ) {
         console.error("Error fetching recipes: ", error);
       }
     };
-
-    fetchRecipes(); 
-
+    fetchRecipes();
   }, []); 
 
   const handleDeleteRecipe = async (recipeID) => {
@@ -73,19 +71,38 @@ export default function SavedRecipies( {inputData} ) {
     setEditingRecipeContent("");
   }
 
+  const handleSearch = (query) => {
+    query = query.toLowerCase();
+    let results = [];
+    for(let i = 0; i < recipes.length; i++) {
+      if(recipes[i].generatedRecipe.split('\n')[0].toLowerCase().includes(query)) {
+        results.push(i);
+      }
+    }
+    setSearchResults(results);
+  }
 
+  
   return (
     <body>
       <header className="saved-header">
         <h1 style={{fontSize: "50px", textShadow: "5px 5px 10px rgba(0,0,0,0.5)"}}>Saved Recipes</h1>
       </header>
+      <div className="saved-search-bar">
+        <p style={{fontSize:"15px"}}>Search for Recipes: </p>
+        <input type="text" placeholder="Type a recipe name" style={{width: "50%"}} onChange={(e) => handleSearch(e.target.value)}/>
+      </div>
       <div className="container">
+        {(searchResults.length === 0) ? (
+            <h1>No Recipes Found</h1>
+        ) : null}
         {recipes?.map((recipe, index) => (
           <>
-          <div className="recipe" onClick={() => setShowDisplayCard(index)} key={index}>
-            <ReactMarkdown className="recipe-card" children={generateTitleEmojis(recipe.generatedRecipe.split('\n')[0])}/>
-            
-          </div>
+          {(searchResults.includes(index) || searchResults.includes(-1)) ? (
+            <div className="recipe" onClick={() => setShowDisplayCard(index)} key={index}>
+              <ReactMarkdown className="recipe-card" children={generateTitleEmojis(recipe.generatedRecipe.split('\n')[0])}/>
+            </div>
+          ) : null}
           {(showDisplayCard===index) ? (
             <div className="popup-card">
               <div className="popup-card-inner">
