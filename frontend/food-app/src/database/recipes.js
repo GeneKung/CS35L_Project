@@ -145,3 +145,58 @@ export async function updateRecipe(recipeID, updatedRecipe) {
     }
 }
 
+export async function saveSharedRecipe(recipeID, recipeData) {
+    try {
+        const currentUser = auth.currentUser;
+
+        if (currentUser) {
+            const uid = currentUser.uid;
+
+            // Reference to the sharedRecipes collection
+            const sharedRecipesCollectionRef = collection(db, "sharedRecipes");
+
+            // Use setDoc to create a new document for the shared recipe
+            await setDoc(doc(sharedRecipesCollectionRef, recipeID), {
+                sharedBy: uid,
+                sharedAt: new Date(),
+                recipeData: recipeData,
+            });
+
+            console.log("Shared recipe document successfully created");
+        } else {
+            console.log('User not authenticated');
+        }
+    } catch (e) {
+        console.error("Error saving shared recipe: ", e);
+    }
+}
+
+export async function getAllSharedRecipes() {
+    try {
+        const currentUser = auth.currentUser;
+        
+        if (currentUser) {
+            const sharedRecipeRef = doc(db, "sharedRecipes");
+            const querySnapshot = await getDocs(sharedRecipeRef);
+
+            const sharedRecipes = [];
+            querySnapshot.forEach((doc) => {
+                // Access data from each document
+                const recipeData = doc.data();
+                sharedRecipes.push({
+                    recipeID: doc.id,
+                    sharedBy: recipeData.sharedBy,
+                    sharedAt: recipeData.sharedAt.toDate(), // Convert timestamp to Date object
+                    recipeData: recipeData.recipeData,
+                });
+            });
+            console.log("All shared recipes successfully retrieved:", sharedRecipes);
+            return sharedRecipes;
+        } else {
+            console.log("User not authenticated.");
+        }
+    } catch (e) {
+        console.error("Error getting shared recipes: ", e);
+    }
+}
+

@@ -1,6 +1,6 @@
 import "./SavedRecipes.css";
 import React, { useEffect, useState } from 'react';
-import { getAllRecipes, deleteRecipe, updateRecipe } from "../../database/recipes";
+import { getAllRecipes, deleteRecipe, updateRecipe, saveSharedRecipe } from "../../database/recipes";
 import ReactMarkdown from 'react-markdown';
 import * as emoji from 'node-emoji'
 
@@ -81,6 +81,14 @@ export default function SavedRecipies( {inputData} ) {
     }
     setSearchResults(results);
   }
+  const handleShareSaveRecipe = async(recipeID, recipe) => {
+    try {
+      await saveSharedRecipe(recipeID, recipe);
+    } catch (error) {
+      console.error("Error shared saved recipe: ", error);
+    }
+  }
+
 
   
   return (
@@ -122,6 +130,11 @@ export default function SavedRecipies( {inputData} ) {
                         </div>
                         <button id = "deleteBtn" onClick={() => handleDeleteRecipe(recipe.id)}>Delete Recipe</button>
                         <button onClick={() => handleEditRecipe(recipe)}>Edit Recipe</button>
+
+                        <button onClick={() => handleShareSaveRecipe(recipe.id, recipe.generatedRecipe)}>
+                          Share Recipe
+                        </button>
+
                         <button onClick={() => setShowDisplayCard(-1)}>Close</button>
                       </>
                     )}

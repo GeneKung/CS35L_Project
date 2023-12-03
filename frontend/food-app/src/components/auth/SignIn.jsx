@@ -1,8 +1,10 @@
 import { useState } from "react";
 import "./SignIn.css";
-import { auth } from "../../firebase.js";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../../firebase.js";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
+import setUpUser from "../../database/setUpUserFiles.js";
 
 export default function LoginPrompt() {
   const [username, setUsername] = useState("");
@@ -16,8 +18,27 @@ export default function LoginPrompt() {
     console.log("Password: " + password);
     try {
       await signInWithEmailAndPassword(auth, username, password);
-      // User is signed in.
       console.log("User is signed in.");
+
+      // Get the user's "users" doc data
+      console.log("Checking that user has been setup properly.");
+      try {
+        const uid = auth.currentUser.uid;
+        let userDocRef = doc(db, "users", uid);
+        let userDocSnap = await getDoc(userDocRef);
+
+        if (!userDocSnap.exists()) {
+          console.log("Couldn't find user's \"users\" doc. Setting up.");
+          await setUpUser();
+        }
+      } catch (error) {
+        console.error(error);
+        await signOut(auth);
+        setError("Unable to login. Please try again later.");
+      }
+
+      // Navigate to Home
+      console.log("User is signed in and is properly setup.");
       navigate("/", { replace: true });
     } catch (error) {
       handleFireBaseError(error);
@@ -29,7 +50,7 @@ export default function LoginPrompt() {
     // Map Firebase authentication errors to user-friendly messages
     switch (error.code) {
       case "auth/invalid-login-credentials":
-        setError("Invalid username or password")
+        setError("Invalid username or password");
         break;
       case "auth/invalid-email":
         setError("Invalid email address. Please provide a valid email.");
@@ -76,7 +97,11 @@ export default function LoginPrompt() {
         />
         <br />
 
-        <button className="button login-button"type="submit" onClick={() => login()}>
+        <button
+          className="button login-button"
+          type="submit"
+          onClick={() => login()}
+        >
           Login
         </button>
 
