@@ -9,6 +9,7 @@ import SignUp from "./components/auth/SignUp";
 import Home from "./components/display/Home";
 import Header from "./components/display/Header";
 import SavedRecipes from "./components/display/SavedRecipes";
+import SearchRecipes from "./components/display/SearchRecipes";
 import RecipeGenerator from "./components/RecipeGenerator";
 import Preference from "./components/display/Preference";
 
@@ -41,6 +42,15 @@ const router = createBrowserRouter([
       <ProtectedRoute>
         <Header />
         <SavedRecipes />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "search",
+    element: (
+      <ProtectedRoute>
+        <Header />
+        <SearchRecipes />
       </ProtectedRoute>
     ),
   },
