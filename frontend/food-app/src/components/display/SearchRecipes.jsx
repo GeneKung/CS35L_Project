@@ -1,9 +1,10 @@
 import "./SearchRecipes.css";
 import React, { useEffect, useState } from 'react';
-import { getSharedRecipes, deleteRecipe, updateRecipe } from "../../database/recipes";
+import getAllRecipes from "../../database/recipes";
 import ReactMarkdown from 'react-markdown';
 import * as emoji from 'node-emoji'
 
+/*
 function generateTitleEmojis(recipeTitle){
   let words = recipeTitle.split(" ");
   for (let i = 0; i < words.length; i++) {
@@ -137,3 +138,4 @@ export default function SearchRecipes( {inputData} ) {
   );
 
 }
+*/
