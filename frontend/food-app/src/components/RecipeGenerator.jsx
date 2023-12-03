@@ -24,7 +24,6 @@ export default function RecipeGenerator() {
     setIsLoading(false);
   };
 
-  // TODO delete
   const handleSaveClick = () => {
     try {
       if (recipe !== "") {
