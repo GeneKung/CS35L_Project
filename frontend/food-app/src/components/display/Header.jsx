@@ -46,6 +46,11 @@ export default function Header() {
               <button className="Menu-Button">Saved Recipes</button>
             </div>
           </Link>
+          <Link to="/search" style={{ textDecoration: "none" }}>
+            <div className="Menu-Item">
+              <button className="Menu-Button">Search Recipes</button>
+            </div>
+          </Link>
         </div>
         <div className="Login">
           <button class="Login-Button" onClick={() => handleLogOut()}>Log Out</button>
