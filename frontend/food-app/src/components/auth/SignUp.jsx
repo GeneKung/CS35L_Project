@@ -4,7 +4,7 @@ import { auth } from "../../firebase.js";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
-import setUpUser from "../../database/setUpUserFiles.js"
+import setUpUser from "../../database/setUpUserFiles.js";
 
 export default function LoginPrompt() {
   const [username, setUsername] = useState("");
@@ -24,18 +24,20 @@ export default function LoginPrompt() {
       // Handle successful signup
       console.log("Signed up user:", userCredential.user);
       try {
-        setUpUser();
-      } catch (e) {
-        console.error(error);
-      }
-
-      try {
-        await signInWithEmailAndPassword(auth, username, password);
-        // User is signed in.
-        console.log("User," , username, "is signed in");
-        navigate("/", { replace: true });
+        await setUpUser();
+        try {
+          await signInWithEmailAndPassword(auth, username, password);
+          // User is signed in.
+          console.log("User,", username, "is signed in");
+          navigate("/", { replace: true });
+        } catch (error) {
+          handleFireBaseError(error);
+          console.error(error);
+        }
       } catch (error) {
-        handleFireBaseError(error);
+        setError(
+          "Unable to login after signing up. Please try logging in later."
+        );
         console.error(error);
       }
     } catch (error) {
@@ -93,7 +95,11 @@ export default function LoginPrompt() {
         />
         <br />
 
-        <button className="button login-button" type="submit" onClick={() => handleSignup()}>
+        <button
+          className="button login-button"
+          type="submit"
+          onClick={() => handleSignup()}
+        >
           Sign Up and Login
         </button>
 
