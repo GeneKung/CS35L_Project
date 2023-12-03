@@ -57,3 +57,9 @@
   width:6em;
   font-weight:bold;
 }
+.styled-image{
+  max-width: 76px;
+  max-height: 76px;
+  position: relative;
+  top: 20px
+}
