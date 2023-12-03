@@ -77,6 +77,11 @@ export async function getAllRecipes() {
     }
 }
 
+export async function searchSavedRecipes(query) {
+
+    
+}
+
 export async function deleteRecipe(recipeID) {
     try {
         const currentUser = auth.currentUser;
