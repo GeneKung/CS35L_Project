@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { signOut } from 'firebase/auth'; 
 import { auth } from "../../firebase.js";
 import { useNavigate } from "react-router-dom";
+import logo from "../../images/food-app-logo.png";
 
 export default function Header() {
 
@@ -23,6 +24,7 @@ export default function Header() {
       <div className="Logo">
         <Link to="/" style={{ textDecoration: "none" }}>
           <div className="Menu-Item">
+            <img src={logo} alt="Logo" className="styled-image"/>
             <button className="Menu-Button"><h1>Food-App</h1></button>
           </div>
         </Link>
