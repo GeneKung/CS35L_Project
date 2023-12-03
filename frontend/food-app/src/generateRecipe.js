@@ -12,9 +12,9 @@ const generateRecipe = async (ingredients, dietaryList, allergyList) => {
       model: "gpt-4",
       messages: [
         { role: "system", content: "You are a chef who creates recipes. Respond in Markdown format. \
-        Don't send any Headers larger than ##. For example, don't use a # header. \
+        Don't send any Headers larger than ##. For example, don't use a # header. The first line should be a ## Header\
         The first line of your repsonse must be a title for the recipe, and the 2nd line onwards should be the recipe. \
-        Make the very last line of output 10 one-word tags seperated by commas"},
+        Make the very last line of output 10 one-word tags seperated by commas. No 'tags: ' label on the last line, just plaintext csv style. All lowercase tags."},
         { role: "user", content: `I have these ingredients: ${ingredients}. What can I make with them?
         I have these dietary restrictions: ${dietaryList} , and these allergies: ${allergyList}` }
       ],
