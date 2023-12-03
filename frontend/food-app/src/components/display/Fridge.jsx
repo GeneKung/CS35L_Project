@@ -111,7 +111,6 @@ function Fridge(props) {
       >
         {isLoading ? "Generating..." : "Generate Recipe"}
       </button>
-      <button onClick={handleSaveClick}>Save Recipe</button>
       <h3>Saved Ingredients:</h3>
       {ingr.map((item1, index) => (
         <button
@@ -126,6 +125,7 @@ function Fridge(props) {
           <>
             <h2>Generated Recipe</h2>
             <ReactMarkdown children={recipe} />
+            <button onClick={handleSaveClick}>Save Recipe</button>
           </>
         )}
       </div>
