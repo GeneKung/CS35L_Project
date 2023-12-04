@@ -8,6 +8,7 @@ export default function RecipeGenerator() {
   const [allergies, setAllergies] = useState([]);
   const [dietary, setDietary] = useState([]);
   const [recipe, setRecipe] = useState("");
+  const [tagLine, setTagLine] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [inputValue1, setInputValue1] = useState("");
   const [inputValue2, setInputValue2] = useState("");
@@ -16,8 +17,13 @@ export default function RecipeGenerator() {
   const handleGenerateClick = async () => {
     setIsLoading(true);
     try {
-      const generatedRecipe = await generateRecipe(ingr, dietary, allergies);
+      const [generatedRecipe, generatedTagLine] = await generateRecipe(
+        ingr,
+        dietary,
+        allergies
+      );
       setRecipe(generatedRecipe);
+      setTagLine(generatedTagLine);
     } catch (error) {
       console.error("Failed to generate recipe:", error);
     }
@@ -27,7 +33,7 @@ export default function RecipeGenerator() {
   const handleSaveClick = () => {
     try {
       if (recipe !== "") {
-        saveRecipe(recipe);
+        saveRecipe(recipe, tagLine);
       }
     } catch (e) {
       console.error("Error saving recipie: ", e);
