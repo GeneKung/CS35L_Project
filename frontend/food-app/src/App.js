@@ -50,6 +50,7 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <Header />
+        <SearchRecipes />
       </ProtectedRoute>
     ),
   },
