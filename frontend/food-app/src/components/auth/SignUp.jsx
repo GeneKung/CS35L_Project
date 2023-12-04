@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./SignIn.css";
 import { auth } from "../../firebase.js";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
 import setUpUser from "../../database/setUpUserFiles.js";
 
@@ -24,17 +24,24 @@ export default function LoginPrompt() {
       // Handle successful signup
       console.log("Signed up user:", userCredential.user);
       try {
-        await setUpUser();
+        // Sign in
         try {
           await signInWithEmailAndPassword(auth, username, password);
           // User is signed in.
           console.log("User,", username, "is signed in");
-          navigate("/", { replace: true });
         } catch (error) {
           handleFireBaseError(error);
           console.error(error);
         }
+
+        // Set up the user's files
+        await setUpUser();
+
+        // Navigate to Home
+        console.log("User is signed in and is properly setup.");
+        navigate("/", { replace: true });
       } catch (error) {
+        signOut(auth);
         setError(
           "Unable to login after signing up. Please try logging in later."
         );

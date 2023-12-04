@@ -25,7 +25,7 @@ export default async function setUpUser() {
     });
     const fridge_id = fridgeRef.id;
 
-    const recipeRef = await addDoc(collection(db, "recipes"));
+    const recipeRef = await addDoc(collection(db, "recipes"), {});
     const recipe_id = recipeRef.id;
 
     setDoc(doc(db, "users", uid), {
