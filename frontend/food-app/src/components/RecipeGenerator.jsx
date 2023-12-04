@@ -14,6 +14,7 @@ export default function RecipeGenerator() {
   const [inputValue1, setInputValue1] = useState("");
   const [inputValue2, setInputValue2] = useState("");
   const [inputValue3, setInputValue3] = useState("");
+  const [saveSuccess, setSaveSuccess] = useState(false);
 
   const handleGenerateClick = async () => {
     setIsLoading(true);
@@ -35,6 +36,12 @@ export default function RecipeGenerator() {
     try {
       if (recipe !== "") {
         saveRecipe(recipe, tagLine);
+        setSaveSuccess(true);
+        
+        //after 3 seconds turn back to false
+        setTimeout(() => {
+          setSaveSuccess(false);
+        }, 3000);
       }
     } catch (e) {
       console.error("Error saving recipie: ", e);
@@ -178,6 +185,7 @@ export default function RecipeGenerator() {
             <ReactMarkdown children={recipe} />
             <div className="center-container">
               <button onClick={handleSaveClick} style={{marginTop: '0px'}}>Save Recipe</button>
+              {saveSuccess && <span style={{fontWeight: 'bold', fontStyle: 'italic', fontSize:'14px', marginTop:'-10px'}}>✅ Recipe saved successfully!</span>}
             </div>
           </div>
           </>

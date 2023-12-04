@@ -10,6 +10,7 @@ import {
 } from "../../database/fridgeFirestore.js";
 
 function Fridge(props) {
+  const [saveSuccess, setSaveSuccess] = useState(false);
   const [ingr, setIngr] = useState([]);
   const [inputValue1, setInputValue1] = useState("");
   const [recipe, setRecipe] = useState("");
@@ -83,6 +84,12 @@ function Fridge(props) {
     try {
       if (recipe !== "") {
         saveRecipe(recipe, tagLine);
+        setSaveSuccess(true);
+
+        // Reset saveSuccess after 3 seconds
+        setTimeout(() => {
+          setSaveSuccess(false);
+        }, 3000);
       }
     } catch (e) {
       console.error("Error saving recipie: ", e);
@@ -128,6 +135,7 @@ function Fridge(props) {
             <h2>Generated Recipe</h2>
             <ReactMarkdown children={recipe} />
             <button onClick={handleSaveClick}>Save Recipe</button>
+            {saveSuccess && <span style={{fontWeight: 'bold', fontStyle: 'italic', fontSize:'14px'}}>✅ Recipe saved successfully!</span>}
           </>
         )}
       </div>
