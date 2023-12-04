@@ -1,0 +1,15 @@
+.whole-container {
+    display: flex;
+}
+  
+.third-section{
+    flex: 1;
+    padding: 10px;
+}
+
+.center-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+

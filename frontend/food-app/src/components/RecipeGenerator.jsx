@@ -2,6 +2,7 @@ import { useState } from "react";
 import generateRecipe from "../generateRecipe";
 import ReactMarkdown from "react-markdown";
 import { saveRecipe } from "../database/recipes";
+import "./RecipeGenerator.css"
 
 export default function RecipeGenerator() {
   const [ingr, setIngr] = useState([]);
@@ -56,71 +57,126 @@ export default function RecipeGenerator() {
     setInputValue2(""); // Clear input value after adding
   }
 
+  function deleteItem(indexToDelete, num) {
+    // direct state update might cause problems
+    if (num === 1){
+      const updatedIngr = ingr.filter(
+        (ingredient, index) => index !== indexToDelete
+      );
+      setIngr(updatedIngr);
+    }
+    else if (num === 2){
+      const updatedAllergy = allergies.filter(
+        (allergy, index) => index !== indexToDelete
+      );
+      setAllergies(updatedAllergy);
+    }
+    else if (num === 3){
+      const updatedDiet = dietary.filter(
+        (diet, index) => index !== indexToDelete
+      );
+      setDietary(updatedDiet);
+    }
+  }
+
   return (
     <>
-      <form onSubmit={addIngredient}>
-        <label>
-          New Ingredient:
+    <div className="whole-container">
+      <form onSubmit={addIngredient} className="third-section">
+        <h3>Ingredients</h3>
           <input
             type="text"
             value={inputValue1}
             onChange={(e) => setInputValue1(e.target.value)}
+            placeholder="Enter new ingredient"
+            style = {{width: '250px'}}
           />
-        </label>
         <button type="submit">Add</button>
+        {ingr.map((item1, index) => (
+        <li
+        onClick={() => deleteItem(index, 1)}
+        onMouseOver={(e) => {
+          e.target.style.color = "rgb(192, 45, 26)";
+          e.target.style.cursor = "pointer";
+        }}
+        onMouseOut={(e) => {
+          e.target.style.color = "initial";
+          e.target.style.cusor = "initial";
+        }}
+        >
+        {item1}
+        </li>
+      ))}
       </form>
-      <form onSubmit={addAllergy}>
-        <label>
-          New Allergy:
+      <form onSubmit={addAllergy} className="third-section">
+        <h3>Allergies</h3>
           <input
             type="text"
             value={inputValue2}
             onChange={(e) => setInputValue2(e.target.value)}
+            placeholder="Enter new allergy"
+            style = {{width: '250px'}}
           />
-        </label>
         <button type="submit">Add</button>
+        {allergies.map((item2, index) => (
+        <li
+        onClick={() => deleteItem(index, 2)}
+        onMouseOver={(e) => {
+          e.target.style.color = "rgb(192, 45, 26)";
+          e.target.style.cursor = "pointer";
+        }}
+        onMouseOut={(e) => {
+          e.target.style.color = "initial";
+          e.target.style.cusor = "initial";
+        }}
+        >
+        {item2}
+        </li>
+      ))}
       </form>
-      <form onSubmit={addDietary}>
-        <label>
-          New Dietary Restriction:
+      <form onSubmit={addDietary} className="third-section">
+        <h3>Dietary Restrictions</h3>
           <input
             type="text"
             value={inputValue3}
             onChange={(e) => setInputValue3(e.target.value)}
+            placeholder="Enter new dietary restriction"
+            style = {{width: '250px'}}
           />
-        </label>
         <button type="submit">Add</button>
+        {dietary.map((item3, index) => (
+        <li
+        onClick={() => deleteItem(index, 3)}
+        onMouseOver={(e) => {
+          e.target.style.color = "rgb(192, 45, 26)";
+          e.target.style.cursor = "pointer";
+        }}
+        onMouseOut={(e) => {
+          e.target.style.color = "initial";
+          e.target.style.cusor = "initial";
+        }}
+        >
+        {item3}
+        </li>
+      ))}
       </form>
-
+    </div>
+    <div className="center-container">
       <button onClick={handleGenerateClick} disabled={isLoading}>
         {isLoading ? "Generating..." : "Generate Recipe"}
       </button>
-
-      <button onClick={handleSaveClick}>Save Recipe</button>
-
-      <h3>Ingredients:</h3>
-      {ingr.map((item1) => (
-        <div>{item1}</div>
-      ))}
-
-      <h3>Allergies:</h3>
-      {allergies.map((item2) => (
-        <div>{item2}</div>
-      ))}
-
-      <h3>Dietary Restrictions:</h3>
-      {dietary.map((item3) => (
-        <div>{item3}</div>
-      ))}
-
-      <div>
+    </div>
+      
         {recipe && (
           <>
-            <h2>Generated Recipe</h2>
+          <div style={{border: '3px solid black'}}>
             <ReactMarkdown children={recipe} />
+            <div className="center-container">
+              <button onClick={handleSaveClick} style={{marginTop: '0px'}}>Save Recipe</button>
+            </div>
+          </div>
           </>
         )}
-      </div>
     </>
   );
 }
