@@ -61,7 +61,7 @@ export default function SearchRecipes({ inputData }) {
       <div id="search-results-container" className="search-results-container">
         {searchResults.map((recipe, index) => (
           <div id={`search-result-${index}`} className="search-result" key={index}>
-            <ReactMarkdown children={recipe.generatedRecipe} />
+            <ReactMarkdown children={recipe.recipe} />
           </div>
         ))}
       </div>
