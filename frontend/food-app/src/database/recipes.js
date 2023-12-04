@@ -6,6 +6,8 @@ import {
   doc,
   updateDoc,
   getDocs,
+  where,
+  query,
 } from "firebase/firestore";
 import { auth, db } from "../firebase.js";
 
@@ -95,8 +97,8 @@ export async function searchSharedRecipes_List(tags) {
   const lowerTags = tags.map((string) => string.toLowerCase());
   const resultList = [];
 
-  for (let i = 0; i < tags.length; i++) {
-    await resultList.append(searchSharedRecipes(tags[i]));
+  for (let i = 0; i < lowerTags.length; i++) {
+    await resultList.push(searchSharedRecipes(lowerTags[i]));
   }
 
   const unionArray = [...new Set(resultList.flat())];
@@ -104,7 +106,7 @@ export async function searchSharedRecipes_List(tags) {
 
   for (const docId of unionArray) {
     const recipeRef = doc(db, "sharedRecipes", docId);
-    recipesData.append({ id: recipeRef.id, ...recipeRef.data() });
+    recipesData.push({ id: recipeRef.id, ...recipeRef.data() });
     console.log("data: ", recipesData);
   }
 
@@ -114,25 +116,17 @@ export async function searchSharedRecipes_List(tags) {
 export async function searchSharedRecipes(tag) {
   const lowerTag = tag.toLowerCase();
   const sharedRef = collection(db, "sharedRecipes");
-  const query = sharedRef.where("tags", "array-contains", lowerTag);
+  const q = query(sharedRef, where("tags", "array-contains", lowerTag));
 
-  query
-    .get()
-    .then((snapshot) => {
-      if (snapshot.empty) {
-        console.log("No matching documents.");
-        return [];
-      }
-
-      snapshot.forEach((doc) => {
-        const matchingIds = [];
-        matchingIds.push(doc.id);
-        return matchingIds;
-      });
-    })
-    .catch((error) => {
-      console.log("Error getting documents", error);
-      return [];
+  const snapshot = await getDocs(q);
+  if (snapshot.empty) {
+    console.log("No matching documents.");
+    return [];
+  }
+  snapshot.forEach((doc) => {
+    const matchingIds = [];
+    matchingIds.push(doc.id);
+    return matchingIds;
     });
 }
 
