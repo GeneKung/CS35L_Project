@@ -1,142 +1,56 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #BAD7E9;
-    margin: 0;
-    padding: 0;
-}
-
-.saved-header{
-    background-color: #7ea1b4;
-    color: white;
+#search-header {
     text-align: center;
     padding: 20px;
-    background-size: contain;
-    background-image: url('../../images/saved-background.png');
+    background-color: #333;
+    color: #fff;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-
-
-.container {
+#search-input-bar {
     display: flex;
-    flex-wrap: wrap;
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: rgba(0,0,0,0);
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
 }
 
-
-.container .recipe {
+#search-input {
     padding: 10px;
-    width:48%;
-    border: 1px solid black;
-    background-color: white;
-    color: black;
-    text-align: center;
-}
-
-
-.recipe:hover {
-    background-color:  #c8c8c8
-}
-
-.recipe-info {
-    flex: 1;
-}
-
-.popup-card h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-.popup-card p {
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-.popup-card textarea {
-    width: 100%;
-    height: 80%;
-    margin-bottom: 10px;
-}
-
-.popup-card button {
     margin-right: 10px;
-    padding: 8px 16px;
-    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
 }
 
-.popup-card-buttons {
-    display: flex;
-}
-
-/* Add styles for buttons, adjust as needed */
-button {
-    background-color: #333333;
+#search-add-button {
+    padding: 10px 20px;
+    background-color: #4285f4;
     color: #fff;
     border: none;
-    border-radius: 3px;
+    border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
 }
 
-#deleteBtn {
-    background-color: red;
+#search-add-button:hover {
+    background-color: #3367d6;
 }
 
-button:hover {
-    background-color: #555;
-}
-
-.popup-card {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(0,0,0,0.5);
-
+#search-words-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
 }
 
-.popup-card-inner {
-    border-radius: 15px;
-    position: relative;
-    padding: 32px;
-    width: 75%;
-    height: 600px;
-    max-width: 1000px;
-    background-color: #FFF;
+#search-word {
+    padding: 10px;
+    background-color: #4285f4;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
 }
 
-.popup-card-inner .popup-content {
-    height: 90%;
-    overflow-y:auto;
-    color: black;
-}
-
-.popup-card-inner .popup-close-btn {
-    top: 16px;
-    right: 16px;
-}
-
-.popup-card-inner .popup-remove-btn {
-    top: 16px;
-    right: 16px;
-    background-color: #cf3143
-}
-.popup-card-inner .popup-remove-btn:hover {
-    background-color: #a02533;
-}
-
-.saved-search-bar {
-    display: flex;
-    text-align: center;
-    margin: 10px auto;
-    align-items: center;
-    justify-content: center;
-    gap:10px;
+#search-word:hover {
+    background-color: #3367d6;
 }
