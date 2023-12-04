@@ -91,7 +91,50 @@ export async function getAllRecipes() {
   }
 }
 
-export async function searchSavedRecipes(query) {}
+export async function searchSharedRecipes_List(tags) {
+    const lowerTags = tags.map(string => string.toLowerCase());
+    const resultList = []
+
+    for (let i = 0; i < tags.length; i++) {
+        await resultList.append(searchSharedRecipes(tags[i]));
+    }
+
+    const unionArray = [...new Set(resultList.flat())];
+    const recipesData = [];
+
+    for (const docId of unionArray) {
+        const recipeRef = doc(db, "sharedRecipes", docId);
+        recipesData.append({ id: recipeRef.id, ...recipeRef.data() });
+        console.log("data: ", recipesData);
+    }
+
+    return recipesData;
+}
+
+export async function searchSharedRecipes(tag) {
+    const lowerTag = tag.toLowerCase();
+    const sharedRef = collection(db, "sharedRecipes");
+    const query = sharedRef.where('tags', 'array-contains', lowerTag);
+
+    query.get()
+        .then(snapshot => {
+            if (snapshot.empty) {
+                console.log('No matching documents.');
+                return [];
+            }
+            
+            snapshot.forEach(doc => {
+                const matchingIds = [];
+                matchingIds.push(doc.id);
+                return matchingIds;
+            });
+        })
+        .catch(error => {
+            console.log('Error getting documents', error);
+            return [];
+        });
+
+}
 
 export async function deleteRecipe(recipeID) {
   try {
