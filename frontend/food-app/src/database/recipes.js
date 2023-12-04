@@ -234,7 +234,7 @@ export async function saveSharedRecipe(recipeID, recipeData, recipeTags) {
       console.log("User not authenticated");
     }
   } catch (e) {
-    console.error("Error saving shared recipe: ", e);
+    throw new Error(e);
   }
 }
 

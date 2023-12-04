@@ -30,6 +30,8 @@ export default function SavedRecipies({ inputData }) {
   const [editingRecipeContent, setEditingRecipeContent] = useState("");
   const [showDisplayCard, setShowDisplayCard] = useState(-1);
   const [searchResults, setSearchResults] = useState([-1]);
+  const [shareSuccess, setShareSuccess] = useState(false);
+  const [errorShare, setErrorShare] = useState(false);
 
   useEffect(() => {
     // Use the getAllRecipes function to fetch recipes when the component mounts
@@ -92,9 +94,20 @@ export default function SavedRecipies({ inputData }) {
   };
   const handleShareSaveRecipe = async (recipeID, recipe, tags) => {
     try {
-      await saveSharedRecipe(recipeID, recipe, tags);
+      const result = await saveSharedRecipe(recipeID, recipe, tags);
+      console.log(result)
+      setShareSuccess(true);
+      // Reset saveSuccess after 3 seconds
+      setTimeout(() => {
+        setShareSuccess(false);
+      }, 3000);
     } catch (error) {
-      console.error("Error shared saved recipe: ", error);
+      console.error("Error saving shared recipe: ", error);
+      setErrorShare(true);
+      // Reset saveSuccess after 3 seconds
+      setTimeout(() => {
+        setErrorShare(false);
+      }, 3000);
     }
   };
 
@@ -183,7 +196,7 @@ export default function SavedRecipies({ inputData }) {
                       >
                         <FontAwesomeIcon icon={faPencilAlt} />
                       </button>
-
+                      
                       <button
                         onClick={() =>
                           handleShareSaveRecipe(
@@ -197,7 +210,8 @@ export default function SavedRecipies({ inputData }) {
                       >
                         <FontAwesomeIcon icon={faShare} />
                       </button>
-
+                      {shareSuccess && <span className="shared-span">✅ Recipe shared successfully!</span>}
+                      {errorShare && <span className="shared-span">❌ Error! Recipe already shared!</span>}
                       <button 
                         onClick={() => setShowDisplayCard(-1)} 
                         className="close-icon" 

@@ -167,4 +167,10 @@ button:hover {
     opacity: 0.9;
     pointer-events: none; 
 }
+.shared-span{
+    margin-left: -7px; 
+    font-weight: bold;
+    font-style: italic;
+    font-size: 14px;
+}
   
