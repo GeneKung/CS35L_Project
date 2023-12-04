@@ -98,15 +98,17 @@ export async function searchSharedRecipes_List(tags) {
   const resultList = [];
 
   for (let i = 0; i < lowerTags.length; i++) {
-    await resultList.push(searchSharedRecipes(lowerTags[i]));
+    resultList.push(await searchSharedRecipes(lowerTags[i]));
   }
 
+  console.log(resultList);
   const unionArray = [...new Set(resultList.flat())];
+  console.log(unionArray);
   const recipesData = [];
 
   for (const docId of unionArray) {
     const recipeRef = doc(db, "sharedRecipes", docId);
-    recipesData.push({ id: recipeRef.id, ...recipeRef.data() });
+    recipesData.push({ id: recipeRef.id, recipe: recipeRef.recipeData });
     console.log("data: ", recipesData);
   }
 
@@ -117,6 +119,7 @@ export async function searchSharedRecipes(tag) {
   const lowerTag = tag.toLowerCase();
   const sharedRef = collection(db, "sharedRecipes");
   const q = query(sharedRef, where("tags", "array-contains", lowerTag));
+  const matchingIds = [];
 
   const snapshot = await getDocs(q);
   if (snapshot.empty) {
@@ -124,10 +127,12 @@ export async function searchSharedRecipes(tag) {
     return [];
   }
   snapshot.forEach((doc) => {
-    const matchingIds = [];
     matchingIds.push(doc.id);
-    return matchingIds;
     });
+
+   return matchingIds;
+
+   
 }
 
 export async function deleteRecipe(recipeID) {
