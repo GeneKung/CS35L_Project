@@ -13,6 +13,7 @@ function Fridge(props) {
   const [ingr, setIngr] = useState([]);
   const [inputValue1, setInputValue1] = useState("");
   const [recipe, setRecipe] = useState("");
+  const [tagLine, setTagLine] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const currentUser = auth.currentUser;
 
@@ -65,12 +66,13 @@ function Fridge(props) {
   const handleGenerateClick = async () => {
     setIsLoading(true);
     try {
-      const generatedRecipe = await generateRecipe(
+      const [generatedRecipe, generatedTagLine] = await generateRecipe(
         ingr,
         props.diet,
         props.allergy
       );
       setRecipe(generatedRecipe);
+      setTagLine(generatedTagLine);
     } catch (error) {
       console.error("Failed to generate recipe:", error);
     }
@@ -80,7 +82,7 @@ function Fridge(props) {
   const handleSaveClick = () => {
     try {
       if (recipe !== "") {
-        saveRecipe(recipe);
+        saveRecipe(recipe, tagLine);
       }
     } catch (e) {
       console.error("Error saving recipie: ", e);
