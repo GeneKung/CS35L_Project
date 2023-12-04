@@ -19,3 +19,14 @@
 .ingredients-button:hover{
     background-color:rgb(192, 45, 26);
 }
+.save-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.save-container span {
+    margin-left: 5px; 
+    font-weight: bold;
+    font-style: italic;
+    font-size: 14px;
+  }

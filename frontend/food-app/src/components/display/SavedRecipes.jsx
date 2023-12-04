@@ -8,6 +8,8 @@ import {
 } from "../../database/recipes";
 import ReactMarkdown from "react-markdown";
 import * as emoji from "node-emoji";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes, faTrash, faShare, faPencilAlt, faSave } from '@fortawesome/free-solid-svg-icons';
 
 function generateTitleEmojis(recipeTitle) {
   let words = recipeTitle.split(" ");
@@ -146,8 +148,20 @@ export default function SavedRecipies({ inputData }) {
                           setEditingRecipeContent(e.target.value)
                         }
                       />
-                      <button onClick={handleSaveEdit}>Save Changes</button>
-                      <button onClick={handleCancelEdit}>Cancel</button>
+                      <button 
+                        onClick={handleSaveEdit}
+                        className="tooltip-btn" 
+                        data-tooltip="Save"
+                      >
+                        <FontAwesomeIcon icon={faSave} />
+                      </button>
+                      <button 
+                        onClick={handleCancelEdit}
+                        className="tooltip-btn" 
+                        data-tooltip="Close"
+                      >
+                        <FontAwesomeIcon icon={faTimes} />
+                      </button>
                     </>
                   ) : (
                     <>
@@ -157,11 +171,17 @@ export default function SavedRecipies({ inputData }) {
                       <button
                         id="deleteBtn"
                         onClick={() => handleDeleteRecipe(recipe.id)}
+                        className="tooltip-btn"
+                        data-tooltip="Delete"
                       >
-                        Delete Recipe
+                        <FontAwesomeIcon icon={faTrash} />
                       </button>
-                      <button onClick={() => handleEditRecipe(recipe)}>
-                        Edit Recipe
+                      <button 
+                        onClick={() => handleEditRecipe(recipe)} 
+                        className="tooltip-btn" 
+                        data-tooltip="Edit"
+                      >
+                        <FontAwesomeIcon icon={faPencilAlt} />
                       </button>
 
                       <button
@@ -172,13 +192,20 @@ export default function SavedRecipies({ inputData }) {
                             recipe.tags
                           )
                         }
+                        className="tooltip-btn" 
+                        data-tooltip="Share"
                       >
-                        Share Recipe
+                        <FontAwesomeIcon icon={faShare} />
                       </button>
 
-                      <button onClick={() => setShowDisplayCard(-1)}>
-                        Close
+                      <button 
+                        onClick={() => setShowDisplayCard(-1)} 
+                        className="close-icon" 
+                        data-tooltip="Close"
+                      >
+                        <FontAwesomeIcon icon={faTimes} />
                       </button>
+                      
                     </>
                   )}
                 </div>

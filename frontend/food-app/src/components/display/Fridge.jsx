@@ -132,10 +132,13 @@ function Fridge(props) {
       <div>
         {recipe && (
           <>
-            <h2>Generated Recipe</h2>
+          <div style={{border: '3px solid black'}}>
             <ReactMarkdown children={recipe} />
-            <button onClick={handleSaveClick}>Save Recipe</button>
-            {saveSuccess && <span style={{fontWeight: 'bold', fontStyle: 'italic', fontSize:'14px'}}>✅ Recipe saved successfully!</span>}
+            <div className="save-container">
+              <button onClick={handleSaveClick}>Save Recipe</button>
+              {saveSuccess && <span>✅ Recipe saved successfully!</span>}
+            </div> 
+          </div>
           </>
         )}
       </div>
