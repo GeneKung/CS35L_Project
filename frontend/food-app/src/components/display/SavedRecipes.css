@@ -84,6 +84,9 @@ button {
 #deleteBtn {
     background-color: red;
 }
+#deleteBtn:hover{
+    background-color:rgb(208, 21, 21);
+}
 
 button:hover {
     background-color: #555;
@@ -116,20 +119,6 @@ button:hover {
     height: 90%;
     overflow-y:auto;
     color: black;
-}
-
-.popup-card-inner .popup-close-btn {
-    top: 16px;
-    right: 16px;
-}
-
-.popup-card-inner .popup-remove-btn {
-    top: 16px;
-    right: 16px;
-    background-color: #cf3143
-}
-.popup-card-inner .popup-remove-btn:hover {
-    background-color: #a02533;
 }
 
 .saved-search-bar {
