@@ -94,7 +94,7 @@ export default function SearchRecipes({ inputData }) {
         ))}
         
       </div>
-      <button style={{marginTop: '0px', marginBottom:'0px', marginLeft:'10px'}}onClick={handleSearch}>Search</button>
+      <button style={{marginTop: '0px', marginBottom:'0px', marginLeft:'10px', width:'100px'}}onClick={handleSearch}>Search</button>
       <div id="search-results-container" className="search-results-container">
         {searchResults.length === 0 ? (
           <h1>No Recipes Found</h1>

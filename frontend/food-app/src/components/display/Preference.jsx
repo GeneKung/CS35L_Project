@@ -120,12 +120,34 @@ function Preference() {
   }
 
   return (
+    <>
+    <header className="fridge-header">
+        <h1
+          style={{
+            fontSize: "50px",
+            textShadow: "5px 5px 10px rgba(0,0,0,0.5)",
+          }}
+        >
+          My Fridge
+        </h1>
+      </header>
     <div className="whole-container">
       <div className="left-section">
         <Fridge diet={sendDiet()} allergy={allergy} />
       </div>
       <div className="middle-section">
         <div className="allergy-container">
+          <div className="allergy-section">
+            <h3>Allergies</h3>
+            <form onSubmit={changeAllergy}>
+              <input
+                ref={inputRef}
+                type="text"
+                placeholder="Enter your allergy"
+              />
+              <button type="submit" style={{width:"100px"}}>Add</button>
+            </form>
+          </div>
           <h3>Saved Allergies:</h3>
           {allergy.map((item, index) => (
             <li
@@ -161,20 +183,11 @@ function Preference() {
               ))}
             </div>
           </div>
-          <div className="allergy-section">
-            <h3>Allergies</h3>
-            <form onSubmit={changeAllergy}>
-              <input
-                ref={inputRef}
-                type="text"
-                placeholder="Enter your allergy"
-              />
-              <button type="submit">Add</button>
-            </form>
-          </div>
+          
         </div>
       </div>
     </div>
+  </>
   );
 }
 

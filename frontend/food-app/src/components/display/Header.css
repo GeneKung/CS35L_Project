@@ -24,7 +24,7 @@
 }
 
 .Menu-Button {
-  background-color:rgb(192, 45, 26); /* Green */
+  background-color:rgb(192, 45, 26); 
   border: none;
   color: white;
   padding: 10px;
@@ -33,6 +33,11 @@
   display: inline9-block;
   font-size: 16px;
   cursor: pointer;
+}
+
+.Menu-Button:hover {
+  color: black;
+  background-color: rgb(192, 45, 26);
 }
 
 .Logo {
@@ -44,7 +49,7 @@
 }
 
 .Login-Button {
-  background-color:rgba(255, 140, 0, 0.694); /* Green */
+  background-color:rgba(255, 140, 0, 0.694);
   border: none;
   color: white;
   padding: 15px;
@@ -56,6 +61,9 @@
   border-radius: 50px;
   width:6em;
   font-weight:bold;
+}
+.Login-Button:hover {
+  background-color:rgba(200, 110, 0, 0.694);
 }
 .styled-image{
   max-width: 76px;

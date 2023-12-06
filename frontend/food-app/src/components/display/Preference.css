@@ -1,11 +1,20 @@
+.fridge-header{
+    background-color: #7ea1b4;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    background-size: 500px 500px;
+    background-image: url('../../images/fridge-background.png');
+}
+
 .diet-container{
     float: right;
-    border: 1px solid #ccc;
+    border: 2px solid black;
     padding: 10px;
 }
 .allergy-container{
     float: right;
-    border:1px solid #ccc;
+    border:2px solid black;
     padding:10px;
     width: 200px
 }
@@ -19,7 +28,7 @@
 }
 
 .allergy-section{
-    margin-top: 20px;
+    margin-bottom: 10px;
 }
 
 .checkbox-group {

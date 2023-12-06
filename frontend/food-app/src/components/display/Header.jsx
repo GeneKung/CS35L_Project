@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import { signOut } from 'firebase/auth'; 
 import { auth } from "../../firebase.js";
 import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
 import logo from "../../images/food-app-logo.png";
 
 export default function Header() {
+  const [currentPage, setCurrentPage] = useState("home");
 
   const navigate = useNavigate();
   const handleLogOut = async () => {
@@ -19,13 +21,14 @@ export default function Header() {
       });
   }
 
+  console.log(currentPage);
   return (
     <div className="Header">
       <div className="Logo">
         <Link to="/" style={{ textDecoration: "none" }}>
           <div className="Menu-Item">
-            <img src={logo} alt="Logo" className="styled-image"/>
-            <button className="Menu-Button"><h1>Food-App</h1></button>
+            <img src={logo} alt="Logo" className="styled-image" onClick={() => setCurrentPage("home")}/>
+            <button className="Menu-Button" onClick={() => setCurrentPage("home")}><h1>Food-App</h1></button>
           </div>
         </Link>
       </div>
@@ -33,22 +36,30 @@ export default function Header() {
         <div className="Tabs">
         <Link to="/" style={{ textDecoration: "none" }}>
             <div className="Menu-Item">
-              <button className="Menu-Button">Home</button>
+              {currentPage === "home" ? 
+              (<button className="Menu-Button" style={{color: "black", fontWeight: "1000"}}>Home</button>) : 
+              (<button className="Menu-Button" onClick={() => setCurrentPage("home")}>Home</button>)}
             </div>
           </Link>
           <Link to="/fridge" style={{ textDecoration: "none" }}>
             <div className="Menu-Item">
-              <button className="Menu-Button">My Fridge</button>
+            {currentPage === "fridge" ? 
+              (<button className="Menu-Button" style={{color: "black", fontWeight: "1000"}}>My Fridge</button>) : 
+              (<button className="Menu-Button" onClick={() => setCurrentPage("fridge")}>My Fridge</button>)}
             </div>
           </Link>
           <Link to="/saved" style={{ textDecoration: "none" }}>
             <div className="Menu-Item">
-              <button className="Menu-Button">Saved Recipes</button>
+            {currentPage === "saved" ? 
+              (<button className="Menu-Button" style={{color: "black", fontWeight: "1000"}}>Saved Recipes</button>) : 
+              (<button className="Menu-Button" onClick={() => setCurrentPage("saved")}>Saved Recipes</button>)}
             </div>
           </Link>
           <Link to="/search" style={{ textDecoration: "none" }}>
             <div className="Menu-Item">
-              <button className="Menu-Button">Search Recipes</button>
+            {currentPage === "search" ? 
+              (<button className="Menu-Button" style={{color: "black", fontWeight: "1000"}}>Search Reccipes</button>) : 
+              (<button className="Menu-Button" onClick={() => setCurrentPage("search")}>Search Recipes</button>)}
             </div>
           </Link>
         </div>

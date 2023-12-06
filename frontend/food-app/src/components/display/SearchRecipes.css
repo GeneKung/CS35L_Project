@@ -1,9 +1,10 @@
 #search-header {
     text-align: center;
     padding: 20px;
-    background-color: #333;
     color: #fff;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    background-size: contain;
+    background-image: url('../../images/saved-background.png');
 }
 
 #search-input-bar {
@@ -70,6 +71,10 @@
     background-color: white;
     transition: transform 0.3s ease-in-out; /* Add transition effect */
 }
+#search-result:hover {
+    background-color:  #c8c8c8;
+}
+
 
 /* Style the ReactMarkdown content within the recipe card */
 .search-result > div {
