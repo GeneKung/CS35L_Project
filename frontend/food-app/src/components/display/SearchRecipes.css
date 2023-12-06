@@ -54,17 +54,21 @@
 #search-results-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: left;
+    justify-content: center; /* Center the columns */
     gap: 20px;
     margin: 20px;
 }
 
-.search-result {
+#search-result {
+    box-sizing: border-box;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 10px;
-    width: 28.3%; /*in order to fit 3 in a column accounting for margin and gap */
+    width: calc(33.33% - 20px); /* Adjusted width to fit 3 columns with gap */
+    margin-bottom: 20px; /* Added margin to create gap between rows */
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    transition: transform 0.3s ease-in-out; /* Add transition effect */
 }
 
 /* Style the ReactMarkdown content within the recipe card */
