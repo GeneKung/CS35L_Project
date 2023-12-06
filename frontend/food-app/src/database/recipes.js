@@ -109,7 +109,7 @@ export async function searchSharedRecipes_List(tags) {
   for (const docId of unionArray) {
     const recipeRef = doc(db, "sharedRecipes", docId);
     const recipeDoc = await getDoc(recipeRef);
-    recipesData.push({ id: recipeDoc.id, recipe: recipeDoc.data().recipeData });
+    recipesData.push({ id: recipeDoc.id, recipe: recipeDoc.data().recipeData ,tags: recipeDoc.data().tags});
     console.log("data: ", recipesData);
   }
 

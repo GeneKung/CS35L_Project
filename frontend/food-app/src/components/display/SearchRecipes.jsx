@@ -5,12 +5,14 @@ import './SearchRecipes.css';
 import { searchSharedRecipes_List } from "../../database/recipes";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faSave } from '@fortawesome/free-solid-svg-icons';
+import { saveRecipe } from "../../database/recipes";
 
 export default function SearchRecipes({ inputData }) {
   const [searchWords, setSearchWords] = useState([]);
   const [newWord, setNewWord] = useState('');
   const [searchResults, setSearchResults] = useState([-1]);
   const [showDisplayCard, setShowDisplayCard] = useState(-1);
+  const[saveSuccess,setSaveSuccess] = useState(false);
 
   const handleAddWord = (e) => {
     e.preventDefault();
@@ -49,6 +51,23 @@ export default function SearchRecipes({ inputData }) {
     }
     return recipeTitle;
   }
+
+  const handleSaveClick = (recipe, tagLine) => {
+    try {
+      if (recipe !== "") {
+        const arrayToString = tagLine.join(', ');
+        saveRecipe(recipe, arrayToString);
+        setSaveSuccess(true);
+
+        // Reset saveSuccess after 3 seconds
+        setTimeout(() => {
+          setSaveSuccess(false);
+        }, 3000);
+      }
+    } catch (e) {
+      console.error("Error saving recipie: ", e);
+    }
+  };
 
   return (
     <body>
@@ -110,11 +129,18 @@ export default function SearchRecipes({ inputData }) {
                       <FontAwesomeIcon icon={faTimes}/>
                     </button>
                     <button
+                      onClick={() =>
+                        handleSaveClick(
+                          recipe.recipe,
+                          recipe.tags
+                        )
+                      }
                       className="tooltip-btn"
                       data-tooltip="Save Recipe"
                     >
                       <FontAwesomeIcon icon={faSave}/>
                     </button>
+                    {saveSuccess && <span className="shared-span">✅ Recipe saved successfully!</span>}
                   
                 </div>
               </div>
