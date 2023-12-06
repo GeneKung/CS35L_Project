@@ -28,7 +28,7 @@ export default function Header() {
         <Link to="/" style={{ textDecoration: "none" }}>
           <div className="Menu-Item">
             <img src={logo} alt="Logo" className="styled-image" onClick={() => setCurrentPage("home")}/>
-            <button className="Menu-Button" onClick={() => setCurrentPage("home")}><h1>Food-App</h1></button>
+            <button className="Menu-Button" onClick={() => setCurrentPage("home")}><h1>Food-App.AI</h1></button>
           </div>
         </Link>
       </div>
