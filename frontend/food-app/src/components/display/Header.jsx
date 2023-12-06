@@ -25,7 +25,7 @@ export default function Header() {
         <Link to="/" style={{ textDecoration: "none" }}>
           <div className="Menu-Item">
             <img src={logo} alt="Logo" className="styled-image"/>
-            <button className="Menu-Button"><h1>Food-App</h1></button>
+            <button className="Menu-Button"><h1>Food-App.AI</h1></button>
           </div>
         </Link>
       </div>
